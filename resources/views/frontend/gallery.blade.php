@@ -543,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update visible items based on current filter
     function updateVisibleItems() {
-        visibleItems = Array.from(galleryItems).filter(item => 
+        visibleItems = Array.from(galleryItems).filter(item =>
             item.style.display !== 'none'
         );
     }
@@ -555,7 +555,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const imgSrc = this.querySelector('img').src;
             const title = this.querySelector('.gallery-title').textContent;
             const category = this.querySelector('.gallery-category').textContent;
-            
+
             currentIndex = visibleItems.indexOf(this);
             modalImg.src = imgSrc;
             modalCaption.innerHTML = `<strong>${title}</strong><br>${category}`;
@@ -595,7 +595,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const imgSrc = item.querySelector('img').src;
         const title = item.querySelector('.gallery-title').textContent;
         const category = item.querySelector('.gallery-category').textContent;
-        
+
         modalImg.src = imgSrc;
         modalCaption.innerHTML = `<strong>${title}</strong><br>${category}`;
     }

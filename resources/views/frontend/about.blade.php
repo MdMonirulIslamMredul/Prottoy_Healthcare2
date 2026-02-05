@@ -243,9 +243,9 @@
                     </div>
                     <h3 class="mv-title">Our Mission</h3>
                     <p class="mv-text">
-                        To provide accessible, affordable, and quality healthcare services to every citizen of Bangladesh. 
-                        We strive to create a comprehensive healthcare ecosystem that ensures timely medical assistance, 
-                        seamless claims processing, and continuous support for all our members. Our mission is to bridge 
+                        To provide accessible, affordable, and quality healthcare services to every citizen of Bangladesh.
+                        We strive to create a comprehensive healthcare ecosystem that ensures timely medical assistance,
+                        seamless claims processing, and continuous support for all our members. Our mission is to bridge
                         the gap between healthcare providers and patients, making quality healthcare a reality for everyone.
                     </p>
                 </div>
@@ -258,9 +258,9 @@
                     </div>
                     <h3 class="mv-title">Our Vision</h3>
                     <p class="mv-text">
-                        To become the most trusted and preferred healthcare management organization in Bangladesh by 2030. 
-                        We envision a future where every individual has access to world-class healthcare services regardless 
-                        of their location or economic status. Through innovation, technology, and unwavering commitment, 
+                        To become the most trusted and preferred healthcare management organization in Bangladesh by 2030.
+                        We envision a future where every individual has access to world-class healthcare services regardless
+                        of their location or economic status. Through innovation, technology, and unwavering commitment,
                         we aim to set new standards in healthcare delivery and customer satisfaction across the nation.
                     </p>
                 </div>
@@ -289,13 +289,13 @@
                     <div class="leader-content">
                         <h3 class="leader-name">Chairman's Profile</h3>
                         <p class="leader-title">Chairman, Board of Directors</p>
-                        
+
                         <div class="leader-bio">
                             <h5 class="mb-3"><i class="bi bi-book me-2"></i>Professional Background</h5>
                             <p>
-                                With over 30 years of experience in healthcare management and administration, our Chairman has been 
-                                instrumental in shaping the healthcare landscape of Bangladesh. A distinguished alumnus of Dhaka University 
-                                and Harvard Business School, he brings a wealth of knowledge in strategic planning, healthcare policy, 
+                                With over 30 years of experience in healthcare management and administration, our Chairman has been
+                                instrumental in shaping the healthcare landscape of Bangladesh. A distinguished alumnus of Dhaka University
+                                and Harvard Business School, he brings a wealth of knowledge in strategic planning, healthcare policy,
                                 and organizational development.
                             </p>
 
@@ -321,9 +321,9 @@
 
                             <h5 class="mb-3"><i class="bi bi-chat-quote me-2"></i>Chairman's Message</h5>
                             <blockquote class="border-start border-4 border-primary ps-3 py-2" style="background: #f8f9fa;">
-                                <em>"Healthcare is not a privilege; it is a fundamental right. At Prottoy Healthcare, we are committed 
-                                to ensuring that every individual receives the care they deserve. Our journey has been one of dedication, 
-                                innovation, and unwavering focus on customer satisfaction. Together, we will continue to build a healthier 
+                                <em>"Healthcare is not a privilege; it is a fundamental right. At Prottoy Healthcare, we are committed
+                                to ensuring that every individual receives the care they deserve. Our journey has been one of dedication,
+                                innovation, and unwavering focus on customer satisfaction. Together, we will continue to build a healthier
                                 Bangladesh for future generations."</em>
                             </blockquote>
                         </div>
@@ -344,13 +344,13 @@
                     <div class="leader-content">
                         <h3 class="leader-name">Managing Director's Profile</h3>
                         <p class="leader-title">Managing Director & CEO</p>
-                        
+
                         <div class="leader-bio">
                             <h5 class="mb-3"><i class="bi bi-book me-2"></i>Professional Background</h5>
                             <p>
-                                Our Managing Director brings over 25 years of comprehensive experience in healthcare operations, 
-                                business development, and technology integration. Armed with an MBA from London Business School 
-                                and a medical degree, he uniquely combines clinical knowledge with business acumen to drive 
+                                Our Managing Director brings over 25 years of comprehensive experience in healthcare operations,
+                                business development, and technology integration. Armed with an MBA from London Business School
+                                and a medical degree, he uniquely combines clinical knowledge with business acumen to drive
                                 operational excellence at Prottoy Healthcare.
                             </p>
 
@@ -376,9 +376,9 @@
 
                             <h5 class="mb-3"><i class="bi bi-chat-quote me-2"></i>MD's Message</h5>
                             <blockquote class="border-start border-4 border-primary ps-3 py-2" style="background: #f8f9fa;">
-                                <em>"In today's rapidly evolving healthcare landscape, we must embrace innovation while staying true to 
-                                our core values of compassion and excellence. Our dedicated team works tirelessly to ensure that every 
-                                customer receives prompt, efficient, and caring service. We are not just managing healthcare; we are 
+                                <em>"In today's rapidly evolving healthcare landscape, we must embrace innovation while staying true to
+                                our core values of compassion and excellence. Our dedicated team works tirelessly to ensure that every
+                                customer receives prompt, efficient, and caring service. We are not just managing healthcare; we are
                                 creating lasting partnerships with our customers and healthcare providers for a healthier tomorrow."</em>
                             </blockquote>
                         </div>

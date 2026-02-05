@@ -333,7 +333,7 @@
                     </div>
                     <h3 class="service-title">24/7 Helpline</h3>
                     <p class="service-text">
-                        Round-the-clock customer support through our dedicated helpline. Our trained representatives 
+                        Round-the-clock customer support through our dedicated helpline. Our trained representatives
                         are available to assist you with queries, claims, and emergency situations at any time.
                     </p>
                     <div class="mt-3">
@@ -351,7 +351,7 @@
                     </div>
                     <h3 class="service-title">Claims Processing</h3>
                     <p class="service-text">
-                        Fast and efficient claims processing with transparent procedures. Submit your claims online 
+                        Fast and efficient claims processing with transparent procedures. Submit your claims online
                         or through your PHO, and track the status in real-time through our portal.
                     </p>
                     <div class="mt-3">
@@ -369,7 +369,7 @@
                     </div>
                     <h3 class="service-title">Healthcare Network</h3>
                     <p class="service-text">
-                        Access to a vast network of hospitals, clinics, and diagnostic centers across Bangladesh. 
+                        Access to a vast network of hospitals, clinics, and diagnostic centers across Bangladesh.
                         Receive quality healthcare services from our partner providers with direct billing facility.
                     </p>
                     <div class="mt-3">
@@ -387,7 +387,7 @@
                     </div>
                     <h3 class="service-title">Personal PHO</h3>
                     <p class="service-text">
-                        Each customer is assigned a dedicated Primary Healthcare Officer who serves as your point 
+                        Each customer is assigned a dedicated Primary Healthcare Officer who serves as your point
                         of contact for all healthcare needs, assistance, and support services.
                     </p>
                 </div>
@@ -400,7 +400,7 @@
                     </div>
                     <h3 class="service-title">Online Portal</h3>
                     <p class="service-text">
-                        User-friendly online portal to manage your profile, view service history, submit claims, 
+                        User-friendly online portal to manage your profile, view service history, submit claims,
                         download documents, and access all healthcare information conveniently.
                     </p>
                 </div>
@@ -413,7 +413,7 @@
                     </div>
                     <h3 class="service-title">Notifications</h3>
                     <p class="service-text">
-                        Stay informed with timely notifications about claim status, policy updates, service reminders, 
+                        Stay informed with timely notifications about claim status, policy updates, service reminders,
                         and important announcements through SMS, email, and portal notifications.
                     </p>
                 </div>
@@ -437,8 +437,8 @@
                 <div class="step-content">
                     <h4 class="step-title">Receive Healthcare Service</h4>
                     <p class="step-description">
-                        Visit any of our partner healthcare facilities and receive the medical service you need. 
-                        Inform the provider that you are a Prottoy Healthcare customer and present your customer ID 
+                        Visit any of our partner healthcare facilities and receive the medical service you need.
+                        Inform the provider that you are a Prottoy Healthcare customer and present your customer ID
                         or card. Many of our partner facilities offer direct billing, so you may not need to pay upfront.
                     </p>
                 </div>
@@ -485,8 +485,8 @@
                 <div class="step-content">
                     <h4 class="step-title">Claim Verification</h4>
                     <p class="step-description">
-                        Our claims team will verify your submission within 24 hours. They will review all documents, 
-                        check service eligibility, and may contact you if additional information is required. You will 
+                        Our claims team will verify your submission within 24 hours. They will review all documents,
+                        check service eligibility, and may contact you if additional information is required. You will
                         receive a confirmation email/SMS with your claim reference number.
                     </p>
                 </div>
@@ -657,7 +657,7 @@
                 <i class="bi bi-chevron-down"></i>
             </div>
             <div class="faq-answer">
-                Most claims are processed within 48-72 hours after submission. Complex cases requiring additional 
+                Most claims are processed within 48-72 hours after submission. Complex cases requiring additional
                 verification may take up to 5-7 business days. You will be notified immediately once your claim is approved.
             </div>
         </div>
@@ -668,8 +668,8 @@
                 <i class="bi bi-chevron-down"></i>
             </div>
             <div class="faq-answer">
-                You need: (1) Original bills/invoices from the healthcare provider, (2) Prescription from a registered 
-                physician, (3) Diagnostic test reports if applicable, (4) Discharge summary for hospitalization, and 
+                You need: (1) Original bills/invoices from the healthcare provider, (2) Prescription from a registered
+                physician, (3) Diagnostic test reports if applicable, (4) Discharge summary for hospitalization, and
                 (5) Your customer ID. Your PHO can help you gather all required documents.
             </div>
         </div>
@@ -680,8 +680,8 @@
                 <i class="bi bi-chevron-down"></i>
             </div>
             <div class="faq-answer">
-                We recommend visiting our partner facilities for direct billing and faster processing. However, you can 
-                visit any licensed healthcare provider and submit a reimbursement claim. Check our online portal or 
+                We recommend visiting our partner facilities for direct billing and faster processing. However, you can
+                visit any licensed healthcare provider and submit a reimbursement claim. Check our online portal or
                 contact your PHO for the list of partner facilities in your area.
             </div>
         </div>
@@ -692,8 +692,8 @@
                 <i class="bi bi-chevron-down"></i>
             </div>
             <div class="faq-answer">
-                You will receive a detailed explanation for any rejection. Common reasons include incomplete documentation, 
-                services not covered under your plan, or late submission. You have the right to appeal the decision within 
+                You will receive a detailed explanation for any rejection. Common reasons include incomplete documentation,
+                services not covered under your plan, or late submission. You have the right to appeal the decision within
                 30 days by providing additional information or clarification. Contact our claims department for assistance.
             </div>
         </div>
@@ -704,8 +704,8 @@
                 <i class="bi bi-chevron-down"></i>
             </div>
             <div class="faq-answer">
-                You can track your claim through: (1) Online portal using your claim reference number, (2) SMS updates 
-                sent automatically to your registered mobile number, (3) Calling our helpline 16247, or (4) Contacting 
+                You can track your claim through: (1) Online portal using your claim reference number, (2) SMS updates
+                sent automatically to your registered mobile number, (3) Calling our helpline 16247, or (4) Contacting
                 your assigned PHO directly.
             </div>
         </div>

@@ -274,8 +274,8 @@
             </div>
             <div class="document-content">
                 <p>
-                    The Memorandum of Association is the fundamental document that defines the constitution and scope 
-                    of Prottoy Healthcare's activities. It establishes our legal existence and outlines our objectives, 
+                    The Memorandum of Association is the fundamental document that defines the constitution and scope
+                    of Prottoy Healthcare's activities. It establishes our legal existence and outlines our objectives,
                     powers, and limitations as a healthcare organization.
                 </p>
 
@@ -327,7 +327,7 @@
             </div>
             <div class="document-content">
                 <p>
-                    Prottoy Healthcare is committed to protecting the privacy and security of our customers' personal 
+                    Prottoy Healthcare is committed to protecting the privacy and security of our customers' personal
                     and health information. This policy outlines how we collect, use, store, and protect your data.
                 </p>
 
@@ -380,7 +380,7 @@
             </div>
             <div class="document-content">
                 <p>
-                    These Terms of Service govern your use of Prottoy Healthcare services. By registering as a customer 
+                    These Terms of Service govern your use of Prottoy Healthcare services. By registering as a customer
                     or using our services, you agree to be bound by these terms.
                 </p>
 
@@ -429,7 +429,7 @@
                         <i class="bi bi-calendar3 me-1"></i>February 15, 2024
                     </div>
                     <p class="notice-excerpt">
-                        We are pleased to announce the expansion of our services to 25 additional upazilas across 
+                        We are pleased to announce the expansion of our services to 25 additional upazilas across
                         Bangladesh. This expansion will provide healthcare access to over 50,000 new customers.
                     </p>
                     <a href="#" class="text-decoration-none">
@@ -446,7 +446,7 @@
                         <i class="bi bi-calendar3 me-1"></i>February 10, 2024
                     </div>
                     <p class="notice-excerpt">
-                        New claim submission procedures are now in effect. Customers are requested to review the 
+                        New claim submission procedures are now in effect. Customers are requested to review the
                         updated guidelines to ensure faster processing of their claims.
                     </p>
                     <a href="#" class="text-decoration-none">
@@ -463,7 +463,7 @@
                         <i class="bi bi-calendar3 me-1"></i>February 5, 2024
                     </div>
                     <p class="notice-excerpt">
-                        Please note our office hours during upcoming national holidays. Emergency services will 
+                        Please note our office hours during upcoming national holidays. Emergency services will
                         remain available 24/7 through our hotline.
                     </p>
                     <a href="#" class="text-decoration-none">
@@ -482,7 +482,7 @@
                         <i class="bi bi-calendar3 me-1"></i>January 30, 2024
                     </div>
                     <p class="notice-excerpt">
-                        The Annual General Meeting will be held on March 15, 2024. All stakeholders are invited to 
+                        The Annual General Meeting will be held on March 15, 2024. All stakeholders are invited to
                         participate and review our annual performance report.
                     </p>
                     <a href="#" class="text-decoration-none">
@@ -499,7 +499,7 @@
                         <i class="bi bi-calendar3 me-1"></i>January 25, 2024
                     </div>
                     <p class="notice-excerpt">
-                        We have partnered with 15 additional hospitals and diagnostic centers to expand our service 
+                        We have partnered with 15 additional hospitals and diagnostic centers to expand our service
                         network and provide better healthcare access to our customers.
                     </p>
                     <a href="#" class="text-decoration-none">
@@ -516,7 +516,7 @@
                         <i class="bi bi-calendar3 me-1"></i>January 20, 2024
                     </div>
                     <p class="notice-excerpt">
-                        We invite all customers to participate in our annual satisfaction survey. Your feedback helps 
+                        We invite all customers to participate in our annual satisfaction survey. Your feedback helps
                         us improve our services and better meet your healthcare needs.
                     </p>
                     <a href="#" class="text-decoration-none">
