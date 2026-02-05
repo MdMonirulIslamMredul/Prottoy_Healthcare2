@@ -1,0 +1,187 @@
+@extends('backend.layouts.app')
+
+@section('content')
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2>District Manager Dashboard</h2>
+            <p class="text-muted">Welcome, {{ $districtManager->name }}</p>
+        </div>
+    </div>
+
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    @endif
+
+    <!-- Statistics Cards -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-lg-4">
+            <a href="{{ route('districtmanager.upazila-supervisors.index') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                                    <i class="bi bi-pin-map-fill text-primary fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Upazila Supervisors</h6>
+                                <h3 class="mb-0">{{ $upazilaSupervisorsCount }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <a href="{{ route('districtmanager.phos.index') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-info bg-opacity-10 p-3">
+                                    <i class="bi bi-person-vcard text-info fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">PHOs</h6>
+                                <h3 class="mb-0">{{ $phosCount }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <a href="{{ route('districtmanager.customers.index') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-warning bg-opacity-10 p-3">
+                                    <i class="bi bi-people-fill text-warning fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Customers</h6>
+                                <h3 class="mb-0">{{ $customersCount }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Hierarchy Card -->
+    <div class="row g-4 mb-4">
+        <div class="col-12">
+            <a href="{{ route('districtmanager.hierarchy') }}" class="text-decoration-none">
+                <div class="card shadow-sm hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-purple bg-opacity-10 p-3">
+                                    <i class="bi bi-diagram-3 text-purple fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h5 class="mb-1 text-dark">View User Hierarchy</h5>
+                                <p class="mb-0 text-muted">See the complete organizational structure from your district level</p>
+                            </div>
+                            <div class="flex-shrink-0">
+                                <i class="bi bi-arrow-right text-muted fs-3"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Location Information -->
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-geo-alt-fill text-primary me-2"></i>Your Location
+                    </h5>
+                    <hr>
+                    <div class="mb-3">
+                        <strong>Division:</strong><br>
+                        <span class="fs-5">{{ $districtManager->division->name ?? 'N/A' }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>District:</strong><br>
+                        <span class="fs-5">{{ $districtManager->district->name ?? 'N/A' }}</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Role:</strong><br>
+                        <span class="badge bg-primary">District Manager</span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Email:</strong><br>
+                        {{ $districtManager->email }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        <i class="bi bi-info-circle text-info me-2"></i>Quick Info
+                    </h5>
+                    <hr>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            You manage <strong>{{ $districtManager->district->name ?? 'N/A' }}</strong> district
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <strong>{{ $upazilaSupervisorsCount }}</strong> Upazila Supervisors under your supervision
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <strong>{{ $phosCount }}</strong> PHOs serving in your district
+                        </li>
+                        <li class="mb-2">
+                            <i class="bi bi-check-circle text-success me-2"></i>
+                            <strong>{{ $customersCount }}</strong> total customers in your district
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+
+.bg-purple {
+    background-color: #6f42c1;
+}
+
+.text-purple {
+    color: #6f42c1;
+}
+</style>
+@endsection
