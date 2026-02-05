@@ -24,15 +24,19 @@ use App\Http\Controllers\DistrictManager\UpazilaSupervisorManagementController a
 use App\Http\Controllers\DistrictManager\PHOManagementController as DistrictManagerPHOController;
 use App\Http\Controllers\DistrictManager\CustomerManagementController as DistrictManagerCustomerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FrontendController;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Upzila;
 use App\Models\User;
 
-// Home Route
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Frontend Public Routes
+Route::get('/', [FrontendController::class, 'home'])->name('frontend.home');
+Route::get('/about-us', [FrontendController::class, 'about'])->name('frontend.about');
+Route::get('/organisation-leadership', [FrontendController::class, 'organisation'])->name('frontend.organisation');
+Route::get('/policy-legal', [FrontendController::class, 'policy'])->name('frontend.policy');
+Route::get('/customer-service-claims', [FrontendController::class, 'customerService'])->name('frontend.customer-service');
+Route::get('/gallery', [FrontendController::class, 'gallery'])->name('frontend.gallery');
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
