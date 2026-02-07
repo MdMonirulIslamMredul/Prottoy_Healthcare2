@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Upzila;
+use App\Models\Package;
+use App\Models\PackagePurchase;
 
 class SuperAdminController extends Controller
 {
@@ -23,6 +25,13 @@ class SuperAdminController extends Controller
         $totalUsers = User::count();
         $recentUsers = User::latest()->take(10)->get();
 
+        // Package statistics for all PHOs
+        $phoIds = User::where('role', 'pho')->pluck('id');
+        $totalPackagesSold = PackagePurchase::whereIn('pho_id', $phoIds)->count();
+        $totalSalesAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('total_price');
+        $totalPaidAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('paid_amount');
+        $totalDueAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('due_amount');
+
         return view('backend.superadmin.dashboard', compact(
             'divisionalChiefsCount',
             'districtManagersCount',
@@ -30,7 +39,11 @@ class SuperAdminController extends Controller
             'phosCount',
             'customersCount',
             'totalUsers',
-            'recentUsers'
+            'recentUsers',
+            'totalPackagesSold',
+            'totalSalesAmount',
+            'totalPaidAmount',
+            'totalDueAmount'
         ));
     }
 
@@ -172,5 +185,56 @@ class SuperAdminController extends Controller
 
         // Return HTML view that can be printed as PDF
         return view('backend.superadmin.reports.users-pdf', compact('users', 'filters'));
+    }
+
+    public function packageSales(Request $request)
+    {
+        // Get all PHO IDs
+        $phoIds = User::where('role', 'pho')->pluck('id');
+
+        // Get package purchases with filters
+        $query = PackagePurchase::whereIn('pho_id', $phoIds)
+            ->with(['package', 'customer', 'pho', 'payments']);
+
+        // Apply filters
+        if ($request->filled('pho_id')) {
+            $query->where('pho_id', $request->pho_id);
+        }
+
+        if ($request->filled('package_id')) {
+            $query->where('package_id', $request->package_id);
+        }
+
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        $packagePurchases = $query->latest('purchase_date')->paginate(20);
+
+        // Get all PHOs for filter dropdown
+        $phos = User::where('role', 'pho')
+            ->orderBy('name')
+            ->get();
+
+        // Get packages for filter dropdown
+        $packages = Package::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        // Calculate statistics
+        $totalPackagesSold = PackagePurchase::whereIn('pho_id', $phoIds)->count();
+        $totalSalesAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('total_price');
+        $totalPaidAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('paid_amount');
+        $totalDueAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('due_amount');
+
+        return view('backend.superadmin.package-sales', compact(
+            'packagePurchases',
+            'phos',
+            'packages',
+            'totalPackagesSold',
+            'totalSalesAmount',
+            'totalPaidAmount',
+            'totalDueAmount'
+        ));
     }
 }

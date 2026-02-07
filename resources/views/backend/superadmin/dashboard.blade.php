@@ -126,6 +126,81 @@
         </div>
     </div>
 
+    <!-- Package Sales Statistics -->
+    <div class="row g-4 mb-4">
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="{{ route('superadmin.package-sales') }}" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Packages Sold</p>
+                                <h3 class="mb-0">{{ $totalPackagesSold }}</h3>
+                            </div>
+                            <div class="stat-icon bg-primary">
+                                <i class="bi bi-box-seam"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="{{ route('superadmin.package-sales') }}" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Sales Amount</p>
+                                <h3 class="mb-0">৳{{ number_format($totalSalesAmount, 0) }}</h3>
+                            </div>
+                            <div class="stat-icon bg-info">
+                                <i class="bi bi-currency-exchange"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="{{ route('superadmin.package-sales') }}" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Paid Amount</p>
+                                <h3 class="mb-0">৳{{ number_format($totalPaidAmount, 0) }}</h3>
+                            </div>
+                            <div class="stat-icon bg-success">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-3">
+            <a href="{{ route('superadmin.package-sales') }}" class="text-decoration-none">
+                <div class="card border-0 shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <p class="text-muted mb-1 small">Due Amount</p>
+                                <h3 class="mb-0">৳{{ number_format($totalDueAmount, 0) }}</h3>
+                            </div>
+                            <div class="stat-icon bg-warning">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <!-- Hierarchy Card -->
     <div class="row g-4 mb-4">
         <div class="col-12">

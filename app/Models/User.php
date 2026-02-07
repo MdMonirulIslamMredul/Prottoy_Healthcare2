@@ -109,4 +109,20 @@ class User extends Authenticatable
     {
         return $this->hasMany(User::class, 'pho_id');
     }
+
+    /**
+     * Get the package sales (purchases) made by this PHO.
+     */
+    public function packageSales()
+    {
+        return $this->hasMany(PackagePurchase::class, 'pho_id');
+    }
+
+    /**
+     * Get the package purchases made for this customer.
+     */
+    public function packagePurchases()
+    {
+        return $this->hasMany(PackagePurchase::class, 'customer_id');
+    }
 }

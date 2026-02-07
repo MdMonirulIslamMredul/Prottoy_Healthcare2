@@ -13,6 +13,10 @@ class CustomerController extends Controller
     {
         $customers = User::where('role', 'customer')
             ->with(['division', 'district', 'upzila', 'pho'])
+            ->withCount('packagePurchases')
+            ->withSum('packagePurchases', 'total_price')
+            ->withSum('packagePurchases', 'paid_amount')
+            ->withSum('packagePurchases', 'due_amount')
             ->paginate(10);
 
         return view('backend.superadmin.customers.index', compact('customers'));

@@ -30,6 +30,10 @@
                                 <th>Phone</th>
                                 <th>Location</th>
                                 <th>Customers</th>
+                                <th>Packages Sold</th>
+                                <th>Total Amount</th>
+                                <th>Paid</th>
+                                <th>Due</th>
                                 <th>Created</th>
                                 <th class="text-end">Actions</th>
                             </tr>
@@ -51,6 +55,18 @@
                                     </td>
                                     <td>
                                         <span class="badge bg-info">{{ $pho->customers->count() }} Customers</span>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-primary">{{ $pho->package_sales_count ?? 0 }}</span>
+                                    </td>
+                                    <td>
+                                        <strong class="text-primary">৳{{ number_format($pho->package_sales_sum_total_price ?? 0, 0) }}</strong>
+                                    </td>
+                                    <td>
+                                        <span class="text-success">৳{{ number_format($pho->package_sales_sum_paid_amount ?? 0, 0) }}</span>
+                                    </td>
+                                    <td>
+                                        <span class="text-danger">৳{{ number_format($pho->package_sales_sum_due_amount ?? 0, 0) }}</span>
                                     </td>
                                     <td>
                                         <small class="text-muted">{{ $pho->created_at->format('d M, Y') }}</small>

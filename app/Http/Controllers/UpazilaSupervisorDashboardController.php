@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Package;
+use App\Models\PackagePurchase;
 
 class UpazilaSupervisorDashboardController extends Controller
 {
@@ -27,11 +29,33 @@ class UpazilaSupervisorDashboardController extends Controller
             ->with(['customers'])
             ->get();
 
+        // Get package purchase statistics for PHOs under this supervisor
+        $phoIds = User::where('role', 'pho')
+            ->where('upazila_supervisor_id', $upazilaSupervisor->id)
+            ->pluck('id');
+
+        $totalPackagesSold = PackagePurchase::whereIn('pho_id', $phoIds)->count();
+        $totalSalesAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('total_price');
+        $totalPaidAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('paid_amount');
+        $totalDueAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('due_amount');
+
+        // Get recent package purchases
+        $recentPackagePurchases = PackagePurchase::whereIn('pho_id', $phoIds)
+            ->with(['package', 'customer', 'pho'])
+            ->latest()
+            ->take(10)
+            ->get();
+
         return view('backend.upazila-supervisor.dashboard', compact(
             'upazilaSupervisor',
             'phosCount',
             'customersCount',
-            'phos'
+            'phos',
+            'totalPackagesSold',
+            'totalSalesAmount',
+            'totalPaidAmount',
+            'totalDueAmount',
+            'recentPackagePurchases'
         ));
     }
 
@@ -46,6 +70,63 @@ class UpazilaSupervisorDashboardController extends Controller
             ->get();
 
         return view('backend.upazila-supervisor.hierarchy', compact('upazilaSupervisor', 'phos'));
+    }
+
+    public function packageSales(Request $request)
+    {
+        $upazilaSupervisor = auth()->user();
+
+        // Get PHO IDs under this supervisor
+        $phoIds = User::where('role', 'pho')
+            ->where('upazila_supervisor_id', $upazilaSupervisor->id)
+            ->pluck('id');
+
+        // Get package purchases with filters
+        $query = PackagePurchase::whereIn('pho_id', $phoIds)
+            ->with(['package', 'customer', 'pho', 'payments']);
+
+        // Apply filters
+        if ($request->filled('pho_id')) {
+            $query->where('pho_id', $request->pho_id);
+        }
+
+        if ($request->filled('package_id')) {
+            $query->where('package_id', $request->package_id);
+        }
+
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        $packagePurchases = $query->latest('purchase_date')->paginate(20);
+
+        // Get PHOs for filter dropdown
+        $phos = User::where('role', 'pho')
+            ->where('upazila_supervisor_id', $upazilaSupervisor->id)
+            ->orderBy('name')
+            ->get();
+
+        // Get packages for filter dropdown
+        $packages = Package::where('is_active', true)
+            ->orderBy('name')
+            ->get();
+
+        // Calculate statistics
+        $totalPackagesSold = PackagePurchase::whereIn('pho_id', $phoIds)->count();
+        $totalSalesAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('total_price');
+        $totalPaidAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('paid_amount');
+        $totalDueAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('due_amount');
+
+        return view('backend.upazila-supervisor.package-sales', compact(
+            'upazilaSupervisor',
+            'packagePurchases',
+            'phos',
+            'packages',
+            'totalPackagesSold',
+            'totalSalesAmount',
+            'totalPaidAmount',
+            'totalDueAmount'
+        ));
     }
 
     public function allUsers(Request $request)

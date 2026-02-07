@@ -13,6 +13,10 @@ class PHOController extends Controller
     {
         $phos = User::where('role', 'pho')
             ->with(['division', 'district', 'upzila', 'upazilaSupervisor'])
+            ->withCount('packageSales')
+            ->withSum('packageSales', 'total_price')
+            ->withSum('packageSales', 'paid_amount')
+            ->withSum('packageSales', 'due_amount')
             ->paginate(10);
 
         return view('backend.superadmin.phos.index', compact('phos'));

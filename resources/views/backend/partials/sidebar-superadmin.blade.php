@@ -46,6 +46,19 @@
             <span>All Users</span>
         </a>
 
+        <div class="menu-section">Package Management</div>
+
+        <a href="{{ route('packages.index') }}" class="menu-item {{ request()->routeIs('packages.*') ? 'active' : '' }}">
+            <i class="bi bi-box-seam"></i>
+            <span>Healthcare Packages</span>
+        </a>
+
+        <div class="menu-section">Sales Management</div>
+
+        <a href="{{ route('superadmin.package-sales') }}" class="menu-item {{ request()->routeIs('superadmin.package-sales') ? 'active' : '' }}">
+            <i class="bi bi-cart-check"></i>
+            <span>Packages</span>
+        </a>
 
         <div class="menu-section">Settings</div>
 

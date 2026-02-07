@@ -31,6 +31,10 @@
                                 <th>PHO</th>
                                 <th>District</th>
                                 <th>Upazila</th>
+                                <th>Packages</th>
+                                <th>Total Amount</th>
+                                <th>Paid</th>
+                                <th>Due</th>
                                 <th>Created</th>
                                 <th class="text-end">Actions</th>
                             </tr>
@@ -50,6 +54,12 @@
                                     <td>
                                         <small class="text-muted">{{ $customer->upzila->name ?? 'N/A' }}</small>
                                     </td>
+                                    <td>
+                                        <span class="badge bg-primary">{{ $customer->package_purchases_count ?? 0 }}</span>
+                                    </td>
+                                    <td>৳{{ number_format($customer->package_purchases_sum_total_price ?? 0, 0) }}</td>
+                                    <td class="text-success">৳{{ number_format($customer->package_purchases_sum_paid_amount ?? 0, 0) }}</td>
+                                    <td class="text-danger">৳{{ number_format($customer->package_purchases_sum_due_amount ?? 0, 0) }}</td>
                                     <td>
                                         <small class="text-muted">{{ $customer->created_at->format('d M, Y') }}</small>
                                     </td>

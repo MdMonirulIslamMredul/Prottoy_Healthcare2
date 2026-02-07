@@ -16,14 +16,22 @@
 
         <div class="menu-section">My Information</div>
 
-        <a href="#" class="menu-item">
+        <a href="{{ route('profile.show') }}" class="menu-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
             <i class="bi bi-person-circle"></i>
             <span>My Profile</span>
         </a>
 
-        <a href="#" class="menu-item">
+
+        {{-- <a href="#" class="menu-item">
             <i class="bi bi-file-earmark-medical"></i>
             <span>My Records</span>
+        </a> --}}
+
+        <div class="menu-section">My Packages</div>
+
+        <a href="{{ route('customer.packages.index') }}" class="menu-item {{ request()->routeIs('customer.packages.*') ? 'active' : '' }}">
+            <i class="bi bi-box-seam"></i>
+            <span>Healthcare Packages</span>
         </a>
     </div>
 </aside>

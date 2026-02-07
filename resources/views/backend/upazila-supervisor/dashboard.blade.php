@@ -16,6 +16,89 @@
         </div>
     @endif
 
+    <!-- Package Sales Statistics -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('upazilasupervisor.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                                    <i class="bi bi-box-seam text-primary fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Packages Sold</h6>
+                                <h3 class="mb-0">{{ $totalPackagesSold }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('upazilasupervisor.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-info bg-opacity-10 p-3">
+                                    <i class="bi bi-currency-exchange text-info fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Sales Amount</h6>
+                                <h3 class="mb-0">৳{{ number_format($totalSalesAmount, 0) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('upazilasupervisor.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-success bg-opacity-10 p-3">
+                                    <i class="bi bi-check-circle text-success fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Paid Amount</h6>
+                                <h3 class="mb-0">৳{{ number_format($totalPaidAmount, 0) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('upazilasupervisor.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-warning bg-opacity-10 p-3">
+                                    <i class="bi bi-exclamation-triangle text-warning fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Due Amount</h6>
+                                <h3 class="mb-0">৳{{ number_format($totalDueAmount, 0) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <!-- Statistics Cards -->
     <div class="row g-4 mb-4">
         <div class="col-md-6">
@@ -82,6 +165,78 @@
                     </div>
                 </div>
             </a>
+        </div>
+    </div>
+
+    <!-- Recent Package Purchases -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-box-seam text-primary me-2"></i>Recent Package Sales by PHOs
+                    </h5>
+                </div>
+                <div class="card-body">
+                    @if($recentPackagePurchases->count() > 0)
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>SL</th>
+                                        <th>PHO</th>
+                                        <th>Customer</th>
+                                        <th>Package</th>
+                                        <th>Purchase Date</th>
+                                        <th>Total Amount</th>
+                                        <th>Paid</th>
+                                        <th>Due</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($recentPackagePurchases as $index => $purchase)
+                                        <tr>
+                                            <td>{{ $index + 1 }}</td>
+                                            <td>
+                                                <strong>{{ $purchase->pho->name }}</strong><br>
+                                                <small class="text-muted">{{ $purchase->pho->email }}</small>
+                                            </td>
+                                            <td>
+                                                <strong>{{ $purchase->customer->name }}</strong><br>
+                                                <small class="text-muted">{{ $purchase->customer->email }}</small>
+                                            </td>
+                                            <td>
+                                                <strong>{{ $purchase->package->name }}</strong><br>
+                                                <small class="text-muted">{{ Str::limit($purchase->package->details, 40) }}</small>
+                                            </td>
+                                            <td>{{ $purchase->purchase_date->format('d M, Y') }}</td>
+                                            <td class="fw-bold">৳{{ number_format($purchase->total_price, 2) }}</td>
+                                            <td class="text-success">৳{{ number_format($purchase->paid_amount, 2) }}</td>
+                                            <td class="text-danger">৳{{ number_format($purchase->due_amount, 2) }}</td>
+                                            <td>
+                                                @if($purchase->payment_status == 'paid')
+                                                    <span class="badge bg-success">Paid</span>
+                                                @elseif($purchase->payment_status == 'partial')
+                                                    <span class="badge bg-warning">Partial</span>
+                                                @else
+                                                    <span class="badge bg-danger">Pending</span>
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    @else
+                        <div class="text-center py-5">
+                            <i class="bi bi-box-seam text-muted" style="font-size: 3rem;"></i>
+                            <p class="text-muted mt-3 mb-0">No package sales yet</p>
+                            <p class="text-muted">PHOs under your supervision haven't sold any packages yet</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 

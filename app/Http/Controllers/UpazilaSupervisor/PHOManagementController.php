@@ -20,6 +20,10 @@ class PHOManagementController extends Controller
         $phos = User::where('role', 'pho')
             ->where('upazila_supervisor_id', $upazilaSupervisor->id)
             ->with(['division', 'district', 'upzila', 'customers'])
+            ->withCount('packageSales')
+            ->withSum('packageSales', 'total_price')
+            ->withSum('packageSales', 'paid_amount')
+            ->withSum('packageSales', 'due_amount')
             ->latest()
             ->paginate(15);
 

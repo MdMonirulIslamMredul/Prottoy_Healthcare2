@@ -20,6 +20,13 @@
             <i class="bi bi-people-fill"></i>
             <span>Customers</span>
         </a>
+
+        <div class="menu-section">Package Sales</div>
+
+        <a href="{{ route('pho.packages.index') }}" class="menu-item {{ request()->routeIs('pho.packages.*') ? 'active' : '' }}">
+            <i class="bi bi-box-seam"></i>
+            <span>Package Management</span>
+        </a>
     </div>
 </aside>
 

@@ -16,6 +16,89 @@
         </div>
     @endif
 
+    <!-- Package Sales Statistics -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('districtmanager.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                                    <i class="bi bi-box-seam text-primary fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Packages Sold</h6>
+                                <h3 class="mb-0">{{ $totalPackagesSold }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('districtmanager.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-info bg-opacity-10 p-3">
+                                    <i class="bi bi-currency-exchange text-info fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Sales Amount</h6>
+                                <h3 class="mb-0">৳{{ number_format($totalSalesAmount, 0) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('districtmanager.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-success bg-opacity-10 p-3">
+                                    <i class="bi bi-check-circle text-success fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Paid Amount</h6>
+                                <h3 class="mb-0">৳{{ number_format($totalPaidAmount, 0) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-lg-3 col-md-6">
+            <a href="{{ route('districtmanager.package-sales') }}" class="text-decoration-none">
+                <div class="card shadow-sm h-100 hover-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center">
+                            <div class="flex-shrink-0">
+                                <div class="rounded-circle bg-warning bg-opacity-10 p-3">
+                                    <i class="bi bi-exclamation-triangle text-warning fs-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6 class="mb-1 text-muted">Total Due Amount</h6>
+                                <h3 class="mb-0">৳{{ number_format($totalDueAmount, 0) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+
     <!-- Statistics Cards -->
     <div class="row g-4 mb-4">
         <div class="col-md-6 col-lg-4">

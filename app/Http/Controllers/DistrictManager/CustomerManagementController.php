@@ -17,6 +17,10 @@ class CustomerManagementController extends Controller
         $customers = User::where('role', 'customer')
             ->where('district_id', $districtManager->district_id)
             ->with(['division', 'district', 'upzila', 'pho'])
+            ->withCount('packagePurchases')
+            ->withSum('packagePurchases', 'total_price')
+            ->withSum('packagePurchases', 'paid_amount')
+            ->withSum('packagePurchases', 'due_amount')
             ->latest()
             ->paginate(15);
 

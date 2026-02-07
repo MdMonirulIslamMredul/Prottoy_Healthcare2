@@ -29,6 +29,10 @@
                             <th>District</th>
                             <th>Upazila</th>
                             <th>Supervisor</th>
+                            <th>Packages Sold</th>
+                            <th>Total Amount</th>
+                            <th>Paid</th>
+                            <th>Due</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -42,6 +46,12 @@
                                 <td>{{ $pho->district->name ?? 'N/A' }}</td>
                                 <td>{{ $pho->upzila->name ?? 'N/A' }}</td>
                                 <td>{{ $pho->upazilaSupervisor->name ?? 'N/A' }}</td>
+                                <td>
+                                    <span class="badge bg-primary">{{ $pho->package_sales_count ?? 0 }}</span>
+                                </td>
+                                <td>৳{{ number_format($pho->package_sales_sum_total_price ?? 0, 0) }}</td>
+                                <td class="text-success">৳{{ number_format($pho->package_sales_sum_paid_amount ?? 0, 0) }}</td>
+                                <td class="text-danger">৳{{ number_format($pho->package_sales_sum_due_amount ?? 0, 0) }}</td>
                                 <td>
                                     <a href="{{ route('superadmin.phos.edit', $pho->id) }}"
                                        class="btn btn-sm btn-outline-primary">
@@ -60,7 +70,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center text-muted py-4">
+                                <td colspan="12" class="text-center text-muted py-4">
                                     <i class="bi bi-inbox fs-1 d-block mb-2"></i>
                                     No PHOs found
                                 </td>

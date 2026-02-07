@@ -40,6 +40,13 @@
             <i class="bi bi-people"></i>
             <span>All Users</span>
         </a>
+
+        <div class="menu-section">Sales Management</div>
+
+        <a href="{{ route('divisionalchief.package-sales') }}" class="menu-item {{ request()->routeIs('divisionalchief.package-sales') ? 'active' : '' }}">
+            <i class="bi bi-box-seam"></i>
+            <span>Packages</span>
+        </a>
     </div>
 </aside>
 
