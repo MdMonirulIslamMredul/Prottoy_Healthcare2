@@ -133,8 +133,11 @@
                     <button type="submit" class="btn btn-primary me-2">
                         <i class="bi bi-funnel"></i> Filter
                     </button>
-                    <a href="{{ route('upazilasupervisor.package-sales') }}" class="btn btn-secondary">
+                    <a href="{{ route('upazilasupervisor.package-sales') }}" class="btn btn-secondary me-2">
                         <i class="bi bi-x-circle"></i> Clear
+                    </a>
+                    <a href="{{ route('upazilasupervisor.generate-package-sales-report', request()->all()) }}" class="btn btn-success" target="_blank">
+                        <i class="bi bi-file-earmark-pdf"></i> Export PDF
                     </a>
                 </div>
             </form>

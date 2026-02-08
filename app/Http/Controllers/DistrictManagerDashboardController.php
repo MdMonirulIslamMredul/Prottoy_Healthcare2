@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Upzila;
 use App\Models\Package;
 use App\Models\PackagePurchase;
+use App\Models\District;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DistrictManagerDashboardController extends Controller
 {
@@ -147,9 +149,15 @@ class DistrictManagerDashboardController extends Controller
         $districtManager = auth()->user();
 
         // Get PHO IDs in this district
-        $phoIds = User::where('role', 'pho')
-            ->where('district_id', $districtManager->district_id)
-            ->pluck('id');
+        $phoQuery = User::where('role', 'pho')
+            ->where('district_id', $districtManager->district_id);
+
+        // Apply upazila filter to PHOs
+        if ($request->filled('upazila_id')) {
+            $phoQuery->where('upzila_id', $request->upazila_id);
+        }
+
+        $phoIds = $phoQuery->pluck('id');
 
         // Get package purchases with filters
         $query = PackagePurchase::whereIn('pho_id', $phoIds)
@@ -168,6 +176,12 @@ class DistrictManagerDashboardController extends Controller
             $query->where('payment_status', $request->payment_status);
         }
 
+        // Calculate statistics from filtered query (before pagination)
+        $totalPackagesSold = $query->count();
+        $totalSalesAmount = $query->sum('total_price');
+        $totalPaidAmount = $query->sum('paid_amount');
+        $totalDueAmount = $query->sum('due_amount');
+
         $packagePurchases = $query->latest('purchase_date')->paginate(20);
 
         // Get PHOs for filter dropdown
@@ -181,21 +195,90 @@ class DistrictManagerDashboardController extends Controller
             ->orderBy('name')
             ->get();
 
-        // Calculate statistics
-        $totalPackagesSold = PackagePurchase::whereIn('pho_id', $phoIds)->count();
-        $totalSalesAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('total_price');
-        $totalPaidAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('paid_amount');
-        $totalDueAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('due_amount');
+        // Get districts for filter (based on manager's district)
+        $districts = District::where('id', $districtManager->district_id)
+            ->orderBy('name')
+            ->get();
+
+        // Get upazilas for filter (all upazilas in this district)
+        $upzilas = Upzila::where('district_id', $districtManager->district_id)
+            ->orderBy('name')
+            ->get();
 
         return view('backend.district-manager.package-sales', compact(
             'districtManager',
             'packagePurchases',
             'phos',
             'packages',
+            'districts',
+            'upzilas',
             'totalPackagesSold',
             'totalSalesAmount',
             'totalPaidAmount',
             'totalDueAmount'
+        ));
+    }
+
+    public function generatePackageSalesReport(Request $request)
+    {
+        $districtManager = auth()->user();
+
+        $phoQuery = User::where('role', 'pho')
+            ->where('district_id', $districtManager->district_id);
+
+        if ($request->filled('upazila_id')) {
+            $phoQuery->where('upzila_id', $request->upazila_id);
+        }
+
+        $phoIds = $phoQuery->pluck('id');
+
+        $query = PackagePurchase::whereIn('pho_id', $phoIds)
+            ->with(['package', 'customer', 'pho', 'payments']);
+
+        if ($request->filled('pho_id')) {
+            $query->where('pho_id', $request->pho_id);
+        }
+
+        if ($request->filled('package_id')) {
+            $query->where('package_id', $request->package_id);
+        }
+
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        // Calculate statistics from filtered query
+        $totalPackagesSold = $query->count();
+        $totalSalesAmount = $query->sum('total_price');
+        $totalPaidAmount = $query->sum('paid_amount');
+        $totalDueAmount = $query->sum('due_amount');
+
+        $packagePurchases = $query->latest('purchase_date')->get();
+
+        $filters = [];
+        if ($request->filled('upazila_id')) {
+            $filters['Upazila'] = Upzila::find($request->upazila_id)->name ?? 'All';
+        }
+        if ($request->filled('pho_id')) {
+            $filters['PHO'] = User::find($request->pho_id)->name ?? 'All';
+        }
+        if ($request->filled('package_id')) {
+            $filters['Package'] = Package::find($request->package_id)->name ?? 'All';
+        }
+        if ($request->filled('payment_status')) {
+            $filters['Payment Status'] = ucfirst($request->payment_status);
+        }
+
+        $reportTitle = 'District Package Sales Report - ' . $districtManager->district->name;
+
+        return view('backend.pdf.package-sales-report', compact(
+            'packagePurchases',
+            'totalPackagesSold',
+            'totalSalesAmount',
+            'totalPaidAmount',
+            'totalDueAmount',
+            'reportTitle',
+            'filters'
         ));
     }
 }

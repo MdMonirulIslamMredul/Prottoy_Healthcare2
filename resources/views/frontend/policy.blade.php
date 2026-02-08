@@ -257,280 +257,45 @@
             <p class="section-subtitle">Access our official policies and legal documents</p>
         </div>
 
-        <!-- Memorandum of Association -->
-        <div class="document-card">
-            <div class="document-header">
-                <div class="document-icon">
-                    <i class="bi bi-file-earmark-text"></i>
-                </div>
-                <div>
-                    <h3 class="document-title">Memorandum of Association</h3>
-                    <div class="document-meta">
-                        <i class="bi bi-calendar3 me-2"></i>Last Updated: January 2024
-                        <span class="mx-2">|</span>
-                        <i class="bi bi-file-pdf me-2"></i>PDF Document
+        @php
+            $policies = \App\Models\Policy::active()->ordered()->get();
+        @endphp
+
+        @forelse($policies as $policy)
+            <!-- {{ $policy->title }} -->
+            <div class="document-card" style="border-left-color: {{ $policy->color ?? '#667eea' }};">
+                <div class="document-header">
+                    <div class="document-icon" style="background: linear-gradient(135deg, {{ $policy->color ?? '#667eea' }} 0%, {{ $policy->color ?? '#764ba2' }} 100%);">
+                        <i class="{{ $policy->icon ?? 'bi-file-earmark-text' }}"></i>
                     </div>
+                    <div>
+                        <h3 class="document-title">{{ $policy->title }}</h3>
+                        <div class="document-meta">
+                            <i class="bi bi-calendar3 me-2"></i>Last Updated: {{ $policy->updated_at->format('F Y') }}
+                            @if($policy->category)
+                                <span class="mx-2">|</span>
+                                <i class="bi bi-tag me-2"></i>{{ ucfirst($policy->category) }}
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                <div class="document-content">
+                    @if($policy->description)
+                        <p class="lead">{{ $policy->description }}</p>
+                    @endif
+
+                    {!! $policy->content !!}
                 </div>
             </div>
-            <div class="document-content">
-                <p>
-                    The Memorandum of Association is the fundamental document that defines the constitution and scope
-                    of Prottoy Healthcare's activities. It establishes our legal existence and outlines our objectives,
-                    powers, and limitations as a healthcare organization.
-                </p>
-
-                <h5>Key Provisions:</h5>
-                <ul>
-                    <li><strong>Name Clause:</strong> Formally establishes "Prottoy Healthcare" as our registered name</li>
-                    <li><strong>Registered Office Clause:</strong> Specifies the location of our head office in Bangladesh</li>
-                    <li><strong>Objects Clause:</strong> Defines our primary objective to provide comprehensive healthcare management services</li>
-                    <li><strong>Liability Clause:</strong> Establishes the extent of members' liability</li>
-                    <li><strong>Capital Clause:</strong> Details the authorized capital and share structure</li>
-                    <li><strong>Subscription Clause:</strong> Lists founding members and their commitments</li>
-                </ul>
-
-                <h5>Objectives:</h5>
-                <ul>
-                    <li>To provide accessible and affordable healthcare services to citizens of Bangladesh</li>
-                    <li>To establish and maintain a comprehensive healthcare network across all divisions</li>
-                    <li>To facilitate efficient healthcare claims processing and management</li>
-                    <li>To promote healthcare awareness and preventive care practices</li>
-                    <li>To collaborate with healthcare providers and government agencies</li>
-                    <li>To maintain highest standards of service quality and ethical practices</li>
-                </ul>
-
-                <div class="mt-4">
-                    <a href="#" class="download-btn me-2">
-                        <i class="bi bi-download me-2"></i>Download Full Document
-                    </a>
-                    <a href="#" class="download-btn" style="background: #6c757d;">
-                        <i class="bi bi-eye me-2"></i>View Online
-                    </a>
+        @empty
+            <div class="text-center py-5">
+                <div style="font-size: 4rem; color: #dee2e6;">
+                    <i class="bi bi-file-earmark-x"></i>
                 </div>
+                <h4 class="mt-3 text-muted">No Policy Documents Available</h4>
+                <p class="text-muted">Policy documents will be published here soon.</p>
             </div>
-        </div>
-
-        <!-- Privacy Policy -->
-        <div class="document-card" style="border-left-color: #28a745;">
-            <div class="document-header">
-                <div class="document-icon" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%);">
-                    <i class="bi bi-shield-lock"></i>
-                </div>
-                <div>
-                    <h3 class="document-title">Privacy Policy</h3>
-                    <div class="document-meta">
-                        <i class="bi bi-calendar3 me-2"></i>Last Updated: December 2023
-                        <span class="mx-2">|</span>
-                        <i class="bi bi-file-pdf me-2"></i>PDF Document
-                    </div>
-                </div>
-            </div>
-            <div class="document-content">
-                <p>
-                    Prottoy Healthcare is committed to protecting the privacy and security of our customers' personal
-                    and health information. This policy outlines how we collect, use, store, and protect your data.
-                </p>
-
-                <h5>Information We Collect:</h5>
-                <ul>
-                    <li>Personal identification information (name, address, phone number, email)</li>
-                    <li>Healthcare information and medical history</li>
-                    <li>Claims and service utilization data</li>
-                    <li>Payment and transaction information</li>
-                </ul>
-
-                <h5>How We Use Your Information:</h5>
-                <ul>
-                    <li>To provide healthcare services and process claims</li>
-                    <li>To communicate important updates and notifications</li>
-                    <li>To improve service quality and customer experience</li>
-                    <li>To comply with legal and regulatory requirements</li>
-                </ul>
-
-                <h5>Data Security:</h5>
-                <ul>
-                    <li>Industry-standard encryption for all data transmission</li>
-                    <li>Secure storage with regular backups and access controls</li>
-                    <li>Compliance with Bangladesh Data Protection regulations</li>
-                    <li>Regular security audits and vulnerability assessments</li>
-                </ul>
-
-                <div class="mt-4">
-                    <a href="#" class="download-btn">
-                        <i class="bi bi-download me-2"></i>Download Privacy Policy
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Terms of Service -->
-        <div class="document-card" style="border-left-color: #dc3545;">
-            <div class="document-header">
-                <div class="document-icon" style="background: linear-gradient(135deg, #dc3545 0%, #ff6b6b 100%);">
-                    <i class="bi bi-file-earmark-ruled"></i>
-                </div>
-                <div>
-                    <h3 class="document-title">Terms of Service</h3>
-                    <div class="document-meta">
-                        <i class="bi bi-calendar3 me-2"></i>Effective: January 2024
-                        <span class="mx-2">|</span>
-                        <i class="bi bi-file-pdf me-2"></i>PDF Document
-                    </div>
-                </div>
-            </div>
-            <div class="document-content">
-                <p>
-                    These Terms of Service govern your use of Prottoy Healthcare services. By registering as a customer
-                    or using our services, you agree to be bound by these terms.
-                </p>
-
-                <h5>Service Agreement:</h5>
-                <ul>
-                    <li>Eligibility criteria for healthcare services</li>
-                    <li>Service coverage and limitations</li>
-                    <li>Payment terms and conditions</li>
-                    <li>Claim submission procedures and timelines</li>
-                    <li>Customer responsibilities and obligations</li>
-                </ul>
-
-                <h5>Service Modifications:</h5>
-                <ul>
-                    <li>Right to modify services with prior notice</li>
-                    <li>Updates to terms and conditions</li>
-                    <li>Changes in pricing or coverage</li>
-                </ul>
-
-                <div class="mt-4">
-                    <a href="#" class="download-btn">
-                        <i class="bi bi-download me-2"></i>Download Terms of Service
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Official Notices Section -->
-<section class="notices-section">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="section-title">Official Notices</h2>
-            <p class="section-subtitle">Latest updates and announcements</p>
-        </div>
-
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="notice-card">
-                    <span class="notice-badge urgent">
-                        <i class="bi bi-exclamation-triangle me-1"></i>Urgent
-                    </span>
-                    <h4 class="notice-title">Service Expansion to New Areas</h4>
-                    <div class="notice-date">
-                        <i class="bi bi-calendar3 me-1"></i>February 15, 2024
-                    </div>
-                    <p class="notice-excerpt">
-                        We are pleased to announce the expansion of our services to 25 additional upazilas across
-                        Bangladesh. This expansion will provide healthcare access to over 50,000 new customers.
-                    </p>
-                    <a href="#" class="text-decoration-none">
-                        Read more <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="notice-card">
-                    <span class="notice-badge important">
-                        <i class="bi bi-info-circle me-1"></i>Important
-                    </span>
-                    <h4 class="notice-title">Updated Claim Submission Guidelines</h4>
-                    <div class="notice-date">
-                        <i class="bi bi-calendar3 me-1"></i>February 10, 2024
-                    </div>
-                    <p class="notice-excerpt">
-                        New claim submission procedures are now in effect. Customers are requested to review the
-                        updated guidelines to ensure faster processing of their claims.
-                    </p>
-                    <a href="#" class="text-decoration-none">
-                        Read more <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="notice-card">
-                    <span class="notice-badge general">
-                        <i class="bi bi-megaphone me-1"></i>General
-                    </span>
-                    <h4 class="notice-title">Holiday Schedule Notice</h4>
-                    <div class="notice-date">
-                        <i class="bi bi-calendar3 me-1"></i>February 5, 2024
-                    </div>
-                    <p class="notice-excerpt">
-                        Please note our office hours during upcoming national holidays. Emergency services will
-                        remain available 24/7 through our hotline.
-                    </p>
-                    <a href="#" class="text-decoration-none">
-                        Read more <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="notice-card">
-                    <span class="notice-badge important">
-                        <i class="bi bi-info-circle me-1"></i>Important
-                    </span>
-                    <h4 class="notice-title">Annual General Meeting 2024</h4>
-                    <div class="notice-date">
-                        <i class="bi bi-calendar3 me-1"></i>January 30, 2024
-                    </div>
-                    <p class="notice-excerpt">
-                        The Annual General Meeting will be held on March 15, 2024. All stakeholders are invited to
-                        participate and review our annual performance report.
-                    </p>
-                    <a href="#" class="text-decoration-none">
-                        Read more <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="notice-card">
-                    <span class="notice-badge general">
-                        <i class="bi bi-megaphone me-1"></i>General
-                    </span>
-                    <h4 class="notice-title">New Partnership Announcement</h4>
-                    <div class="notice-date">
-                        <i class="bi bi-calendar3 me-1"></i>January 25, 2024
-                    </div>
-                    <p class="notice-excerpt">
-                        We have partnered with 15 additional hospitals and diagnostic centers to expand our service
-                        network and provide better healthcare access to our customers.
-                    </p>
-                    <a href="#" class="text-decoration-none">
-                        Read more <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-
-                <div class="notice-card">
-                    <span class="notice-badge general">
-                        <i class="bi bi-megaphone me-1"></i>General
-                    </span>
-                    <h4 class="notice-title">Customer Satisfaction Survey</h4>
-                    <div class="notice-date">
-                        <i class="bi bi-calendar3 me-1"></i>January 20, 2024
-                    </div>
-                    <p class="notice-excerpt">
-                        We invite all customers to participate in our annual satisfaction survey. Your feedback helps
-                        us improve our services and better meet your healthcare needs.
-                    </p>
-                    <a href="#" class="text-decoration-none">
-                        Read more <i class="bi bi-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <a href="#" class="btn btn-primary btn-lg">
-                <i class="bi bi-archive me-2"></i>View Notice Archive
-            </a>
-        </div>
+        @endforelse
     </div>
 </section>
 

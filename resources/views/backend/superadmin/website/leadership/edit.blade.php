@@ -1,0 +1,261 @@
+@extends('backend.layouts.app')
+
+@section('title', 'Edit Leadership Team Member')
+
+@push('styles')
+<!-- Summernote CSS -->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+<style>
+    .note-editor.note-frame {
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+    }
+    .note-editor.note-frame.is-invalid {
+        border-color: #dc3545;
+    }
+</style>
+@endpush
+
+@section('content')
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white py-3">
+                    <h5 class="mb-0"><i class="bi bi-pencil me-2"></i>Edit Leadership Team Member</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('superadmin.website.leadership.update', $leadership->id) }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror"
+                                       id="name" name="name" value="{{ old('name', $leadership->name) }}" required>
+                                @error('name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="designation" class="form-label">Designation <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control @error('designation') is-invalid @enderror"
+                                       id="designation" name="designation" value="{{ old('designation', $leadership->designation) }}" required
+                                       placeholder="e.g., Chairman, Managing Director, CEO">
+                                @error('designation')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="bio" class="form-label">Biography</label>
+                            <textarea class="form-control @error('bio') is-invalid @enderror"
+                                      id="bio" name="bio">{{ old('bio', $leadership->bio) }}</textarea>
+                            <div class="form-text">Professional background, experience, achievements, and message</div>
+                            @error('bio')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                       id="email" name="email" value="{{ old('email', $leadership->email) }}"
+                                       placeholder="contact@example.com">
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Phone</label>
+                                <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                                       id="phone" name="phone" value="{{ old('phone', $leadership->phone) }}"
+                                       placeholder="+880 1XXX-XXXXXX">
+                                @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="photo" class="form-label">Photo</label>
+
+                            @if($leadership->photo)
+                                <div class="mb-2">
+                                    <img src="{{ asset('storage/' . $leadership->photo) }}"
+                                         alt="{{ $leadership->name }}"
+                                         class="img-thumbnail rounded-circle"
+                                         style="max-height: 150px; max-width: 150px; object-fit: cover;">
+                                    <p class="text-muted small mt-1">Current photo</p>
+                                </div>
+                            @endif
+
+                            <input type="file" class="form-control @error('photo') is-invalid @enderror"
+                                   id="photo" name="photo" accept="image/jpeg,image/png,image/jpg">
+                            <div class="form-text">Leave empty to keep current photo. Recommended: Square image (800x800px), Max 2MB, JPG/PNG</div>
+                            @error('photo')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="order" class="form-label">Display Order</label>
+                                <input type="number" class="form-control @error('order') is-invalid @enderror"
+                                       id="order" name="order" value="{{ old('order', $leadership->order) }}" min="0">
+                                <div class="form-text">Lower numbers appear first</div>
+                                @error('order')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label d-block">Status</label>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active"
+                                           {{ old('is_active', $leadership->is_active) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="is_active">
+                                        Active (Display on website)
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between pt-3">
+                            <a href="{{ route('superadmin.website.leadership.index') }}" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left me-2"></i>Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-check-circle me-2"></i>Update Team Member
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="card shadow-sm border-danger mt-4">
+                <div class="card-header bg-danger bg-opacity-10 py-3">
+                    <h6 class="mb-0 text-danger"><i class="bi bi-exclamation-triangle me-2"></i>Danger Zone</h6>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="mb-1">Delete Leadership Member</h6>
+                            <p class="text-muted small mb-0">This action cannot be undone. The photo will also be permanently deleted.</p>
+                        </div>
+                        <form action="{{ route('superadmin.website.leadership.destroy', $leadership->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to delete {{ $leadership->name }}? This action cannot be undone.')">
+                                <i class="bi bi-trash me-2"></i>Delete Member
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary bg-opacity-10 py-3">
+                    <h6 class="mb-0"><i class="bi bi-info-circle me-2"></i>Current Information</h6>
+                </div>
+                <div class="card-body">
+                    <p class="mb-2"><strong>Name:</strong> {{ $leadership->name }}</p>
+                    <p class="mb-2"><strong>Designation:</strong> {{ $leadership->designation }}</p>
+                    <p class="mb-2"><strong>Display Order:</strong> {{ $leadership->order }}</p>
+                    <p class="mb-2">
+                        <strong>Status:</strong>
+                        <span class="badge {{ $leadership->is_active ? 'bg-success' : 'bg-secondary' }}">
+                            {{ $leadership->is_active ? 'Active' : 'Inactive' }}
+                        </span>
+                    </p>
+                    @if($leadership->email || $leadership->phone)
+                        <hr>
+                        @if($leadership->email)
+                            <p class="mb-2"><strong>Email:</strong> {{ $leadership->email }}</p>
+                        @endif
+                        @if($leadership->phone)
+                            <p class="mb-2"><strong>Phone:</strong> {{ $leadership->phone }}</p>
+                        @endif
+                    @endif
+                </div>
+            </div>
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info bg-opacity-10 py-3">
+                    <h6 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Leadership Profile Tips</h6>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-dark mb-2">Biography Content</h6>
+                    <ul class="small mb-3">
+                        <li><strong>Background:</strong> Education and expertise</li>
+                        <li><strong>Experience:</strong> Years in healthcare/business</li>
+                        <li><strong>Achievements:</strong> Key milestones with dates</li>
+                        <li><strong>Message:</strong> Vision or inspirational quote</li>
+                    </ul>
+
+                    <h6 class="text-dark mb-2">Photo Guidelines</h6>
+                    <ul class="small mb-3">
+                        <li>Professional headshot or formal portrait</li>
+                        <li>Square format works best (800x800px)</li>
+                        <li>Neutral or office background</li>
+                        <li>Business formal attire</li>
+                    </ul>
+
+                    <h6 class="text-dark mb-2">Display Order</h6>
+                    <ul class="small mb-0">
+                        <li>0 = First position (Chairman/CEO)</li>
+                        <li>1 = Second position (MD/COO)</li>
+                        <li>2+ = Other executives</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-warning bg-opacity-10 py-3">
+                    <h6 class="mb-0"><i class="bi bi-clock-history me-2"></i>Update History</h6>
+                </div>
+                <div class="card-body">
+                    <p class="small mb-2"><strong>Created:</strong> {{ $leadership->created_at->format('M d, Y h:i A') }}</p>
+                    <p class="small mb-0"><strong>Last Updated:</strong> {{ $leadership->updated_at->format('M d, Y h:i A') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
+@push('scripts')
+<!-- jQuery (required for Summernote) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Summernote JS -->
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#bio').summernote({
+            height: 300,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'italic', 'underline', 'clear']],
+                ['fontname', ['fontname']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['insert', ['link']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ],
+            placeholder: 'Enter biography details including professional background, experience, achievements, and message...'
+        });
+    });
+</script>
+@endpush

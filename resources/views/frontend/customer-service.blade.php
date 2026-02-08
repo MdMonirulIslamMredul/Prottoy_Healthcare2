@@ -712,77 +712,7 @@
     </div>
 </section>
 
-<!-- Notice Archive Section -->
-<section class="notice-archive-section">
-    <div class="container">
-        <div class="text-center mb-5">
-            <h2 class="text-white">Customer Notice Archive</h2>
-            <p class="text-white-50" style="font-size: 1.1rem;">
-                Important announcements and updates for our customers
-            </p>
-        </div>
 
-        <div class="row">
-            <div class="col-lg-6">
-                <div class="archive-item">
-                    <div class="archive-date"><i class="bi bi-calendar3 me-2"></i>February 10, 2024</div>
-                    <div class="archive-title">New Partner Hospitals Added</div>
-                    <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 0;">
-                        15 new hospitals and diagnostic centers have been added to our network in Dhaka, Chittagong, and Sylhet divisions.
-                    </p>
-                </div>
-
-                <div class="archive-item">
-                    <div class="archive-date"><i class="bi bi-calendar3 me-2"></i>January 28, 2024</div>
-                    <div class="archive-title">Extended Service Hours</div>
-                    <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 0;">
-                        Our customer service is now available 24/7. Call 16247 anytime for assistance.
-                    </p>
-                </div>
-
-                <div class="archive-item">
-                    <div class="archive-date"><i class="bi bi-calendar3 me-2"></i>January 15, 2024</div>
-                    <div class="archive-title">Online Claims Portal Update</div>
-                    <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 0;">
-                        New features added: real-time tracking, document scanner, and instant notifications.
-                    </p>
-                </div>
-            </div>
-
-            <div class="col-lg-6">
-                <div class="archive-item">
-                    <div class="archive-date"><i class="bi bi-calendar3 me-2"></i>December 20, 2023</div>
-                    <div class="archive-title">Holiday Service Schedule</div>
-                    <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 0;">
-                        Emergency services available throughout the holiday season. Office hours adjusted for public holidays.
-                    </p>
-                </div>
-
-                <div class="archive-item">
-                    <div class="archive-date"><i class="bi bi-calendar3 me-2"></i>December 5, 2023</div>
-                    <div class="archive-title">Mobile Banking Integration</div>
-                    <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 0;">
-                        Instant claim settlements now available through bKash, Nagad, and Rocket.
-                    </p>
-                </div>
-
-                <div class="archive-item">
-                    <div class="archive-date"><i class="bi bi-calendar3 me-2"></i>November 18, 2023</div>
-                    <div class="archive-title">Customer Satisfaction Survey Results</div>
-                    <p style="font-size: 0.95rem; opacity: 0.9; margin-bottom: 0;">
-                        Thank you for your feedback! 95% satisfaction rate achieved. View full report on our portal.
-                    </p>
-                </div>
-            </div>
-        </div>
-
-        <div class="text-center mt-4">
-            <a href="#" class="btn btn-light btn-lg">
-                <i class="bi bi-archive me-2"></i>View All Notices
-            </a>
-        </div>
-    </div>
-</section>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

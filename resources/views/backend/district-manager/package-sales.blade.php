@@ -96,6 +96,18 @@
         <div class="card-body">
             <form method="GET" action="{{ route('districtmanager.package-sales') }}" class="row g-3">
                 <div class="col-md-3">
+                    <label for="upazila_id" class="form-label">Filter by Upazila</label>
+                    <select name="upazila_id" id="upazila_id" class="form-select">
+                        <option value="">All Upazilas</option>
+                        @foreach($upzilas as $upazila)
+                            <option value="{{ $upazila->id }}" {{ request('upazila_id') == $upazila->id ? 'selected' : '' }}>
+                                {{ $upazila->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-3">
                     <label for="pho_id" class="form-label">Filter by PHO</label>
                     <select name="pho_id" id="pho_id" class="form-select">
                         <option value="">All PHOs</option>
@@ -133,8 +145,11 @@
                     <button type="submit" class="btn btn-primary me-2">
                         <i class="bi bi-funnel"></i> Filter
                     </button>
-                    <a href="{{ route('districtmanager.package-sales') }}" class="btn btn-secondary">
+                    <a href="{{ route('districtmanager.package-sales') }}" class="btn btn-secondary me-2">
                         <i class="bi bi-x-circle"></i> Clear
+                    </a>
+                    <a href="{{ route('districtmanager.generate-package-sales-report', request()->all()) }}" class="btn btn-success" target="_blank">
+                        <i class="bi bi-file-earmark-pdf"></i> Export PDF
                     </a>
                 </div>
             </form>

@@ -227,6 +227,37 @@
     </div>
 </div>
 
+<!-- About Us Section -->
+@php
+    $aboutUs = \App\Models\AboutContent::active()->ofType('about')->first();
+@endphp
+
+@if($aboutUs)
+<section class="about-section">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">{{ $aboutUs->title }}</h2>
+            <p class="section-subtitle">Discover our story and commitment to healthcare excellence</p>
+        </div>
+
+        <div class="row align-items-center">
+            @if($aboutUs->image)
+            <div class="col-lg-5 mb-4 mb-lg-0">
+                <img src="{{ asset('storage/' . $aboutUs->image) }}" alt="{{ $aboutUs->title }}" class="img-fluid rounded shadow">
+            </div>
+            <div class="col-lg-7">
+            @else
+            <div class="col-lg-12">
+            @endif
+                <div class="lead" style="color: #555; line-height: 1.8;">
+                    {!! nl2br(e($aboutUs->content)) !!}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
 <!-- Mission & Vision Section -->
 <section class="mission-vision-section">
     <div class="container">
@@ -235,33 +266,52 @@
             <p class="section-subtitle">Guiding principles that drive our commitment to excellence</p>
         </div>
 
+        @php
+            $mission = \App\Models\AboutContent::active()->ofType('mission')->first();
+            $vision = \App\Models\AboutContent::active()->ofType('vision')->first();
+        @endphp
+
         <div class="row g-4">
             <div class="col-lg-6">
                 <div class="mv-card">
+                    @if($mission && $mission->image)
+                        <img src="{{ asset('storage/' . $mission->image) }}" alt="Mission" class="img-fluid rounded mb-3">
+                    @endif
                     <div class="mv-icon">
                         <i class="bi bi-bullseye"></i>
                     </div>
-                    <h3 class="mv-title">Our Mission</h3>
+                    <h3 class="mv-title">{{ $mission ? $mission->title : 'Our Mission' }}</h3>
                     <p class="mv-text">
-                        To provide accessible, affordable, and quality healthcare services to every citizen of Bangladesh.
-                        We strive to create a comprehensive healthcare ecosystem that ensures timely medical assistance,
-                        seamless claims processing, and continuous support for all our members. Our mission is to bridge
-                        the gap between healthcare providers and patients, making quality healthcare a reality for everyone.
+                        @if($mission)
+                            {{ $mission->content }}
+                        @else
+                            To provide accessible, affordable, and quality healthcare services to every citizen of Bangladesh.
+                            We strive to create a comprehensive healthcare ecosystem that ensures timely medical assistance,
+                            seamless claims processing, and continuous support for all our members. Our mission is to bridge
+                            the gap between healthcare providers and patients, making quality healthcare a reality for everyone.
+                        @endif
                     </p>
                 </div>
             </div>
 
             <div class="col-lg-6">
                 <div class="mv-card">
+                    @if($vision && $vision->image)
+                        <img src="{{ asset('storage/' . $vision->image) }}" alt="Vision" class="img-fluid rounded mb-3">
+                    @endif
                     <div class="mv-icon">
                         <i class="bi bi-eye"></i>
                     </div>
-                    <h3 class="mv-title">Our Vision</h3>
+                    <h3 class="mv-title">{{ $vision ? $vision->title : 'Our Vision' }}</h3>
                     <p class="mv-text">
-                        To become the most trusted and preferred healthcare management organization in Bangladesh by 2030.
-                        We envision a future where every individual has access to world-class healthcare services regardless
-                        of their location or economic status. Through innovation, technology, and unwavering commitment,
-                        we aim to set new standards in healthcare delivery and customer satisfaction across the nation.
+                        @if($vision)
+                            {{ $vision->content }}
+                        @else
+                            To become the most trusted and preferred healthcare management organization in Bangladesh by 2030.
+                            We envision a future where every individual has access to world-class healthcare services regardless
+                            of their location or economic status. Through innovation, technology, and unwavering commitment,
+                            we aim to set new standards in healthcare delivery and customer satisfaction across the nation.
+                        @endif
                     </p>
                 </div>
             </div>
@@ -270,6 +320,11 @@
 </section>
 
 <!-- Leadership Section -->
+@php
+    $leaders = \App\Models\Leadership::active()->ordered()->get();
+@endphp
+
+@if($leaders->count() > 0)
 <section class="leadership-section">
     <div class="container">
         <div class="text-center mb-5">
@@ -277,117 +332,54 @@
             <p class="section-subtitle">Meet the visionaries behind Prottoy Healthcare</p>
         </div>
 
-        <!-- Chairman Section -->
+        @foreach($leaders as $leader)
         <div class="leader-card">
             <div class="row g-0">
                 <div class="col-lg-4">
                     <div class="leader-image">
-                        <i class="bi bi-person-circle"></i>
+                        @if($leader->photo)
+                            <img src="{{ asset('storage/' . $leader->photo) }}" alt="{{ $leader->name }}"
+                                 style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            <i class="bi bi-person-circle"></i>
+                        @endif
                     </div>
                 </div>
                 <div class="col-lg-8">
                     <div class="leader-content">
-                        <h3 class="leader-name">Chairman's Profile</h3>
-                        <p class="leader-title">Chairman, Board of Directors</p>
+                        <h3 class="leader-name">{{ $leader->name }}</h3>
+                        <p class="leader-title">{{ $leader->designation }}</p>
 
+                        @if($leader->bio)
                         <div class="leader-bio">
-                            <h5 class="mb-3"><i class="bi bi-book me-2"></i>Professional Background</h5>
-                            <p>
-                                With over 30 years of experience in healthcare management and administration, our Chairman has been
-                                instrumental in shaping the healthcare landscape of Bangladesh. A distinguished alumnus of Dhaka University
-                                and Harvard Business School, he brings a wealth of knowledge in strategic planning, healthcare policy,
-                                and organizational development.
-                            </p>
-
-                            <h5 class="mb-3 mt-4"><i class="bi bi-trophy me-2"></i>Key Achievements</h5>
-                            <div class="timeline">
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2015</div>
-                                    <div class="timeline-text">Founded Prottoy Healthcare with a vision to revolutionize healthcare access</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2018</div>
-                                    <div class="timeline-text">Expanded services to all 64 districts of Bangladesh</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2020</div>
-                                    <div class="timeline-text">Received National Healthcare Excellence Award</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2023</div>
-                                    <div class="timeline-text">Launched digital healthcare initiatives reaching 10,000+ customers</div>
-                                </div>
-                            </div>
-
-                            <h5 class="mb-3"><i class="bi bi-chat-quote me-2"></i>Chairman's Message</h5>
-                            <blockquote class="border-start border-4 border-primary ps-3 py-2" style="background: #f8f9fa;">
-                                <em>"Healthcare is not a privilege; it is a fundamental right. At Prottoy Healthcare, we are committed
-                                to ensuring that every individual receives the care they deserve. Our journey has been one of dedication,
-                                innovation, and unwavering focus on customer satisfaction. Together, we will continue to build a healthier
-                                Bangladesh for future generations."</em>
-                            </blockquote>
+                            {!! $leader->bio !!}
                         </div>
+                        @endif
+
+                        @if($leader->email || $leader->phone)
+                        <div class="mt-4">
+                            @if($leader->email)
+                                <p class="mb-2">
+                                    <i class="bi bi-envelope me-2 text-primary"></i>
+                                    <a href="mailto:{{ $leader->email }}" class="text-decoration-none">{{ $leader->email }}</a>
+                                </p>
+                            @endif
+                            @if($leader->phone)
+                                <p class="mb-2">
+                                    <i class="bi bi-telephone me-2 text-primary"></i>
+                                    <a href="tel:{{ $leader->phone }}" class="text-decoration-none">{{ $leader->phone }}</a>
+                                </p>
+                            @endif
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
-
-        <!-- Managing Director Section -->
-        <div class="leader-card">
-            <div class="row g-0">
-                <div class="col-lg-4">
-                    <div class="leader-image">
-                        <i class="bi bi-person-circle"></i>
-                    </div>
-                </div>
-                <div class="col-lg-8">
-                    <div class="leader-content">
-                        <h3 class="leader-name">Managing Director's Profile</h3>
-                        <p class="leader-title">Managing Director & CEO</p>
-
-                        <div class="leader-bio">
-                            <h5 class="mb-3"><i class="bi bi-book me-2"></i>Professional Background</h5>
-                            <p>
-                                Our Managing Director brings over 25 years of comprehensive experience in healthcare operations,
-                                business development, and technology integration. Armed with an MBA from London Business School
-                                and a medical degree, he uniquely combines clinical knowledge with business acumen to drive
-                                operational excellence at Prottoy Healthcare.
-                            </p>
-
-                            <h5 class="mb-3 mt-4"><i class="bi bi-trophy me-2"></i>Career Milestones</h5>
-                            <div class="timeline">
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2010-2015</div>
-                                    <div class="timeline-text">Served as COO at leading healthcare institutions in Bangladesh</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2016</div>
-                                    <div class="timeline-text">Joined Prottoy Healthcare as Managing Director</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2019</div>
-                                    <div class="timeline-text">Implemented nationwide digital transformation program</div>
-                                </div>
-                                <div class="timeline-item">
-                                    <div class="timeline-year">2022</div>
-                                    <div class="timeline-text">Awarded "Healthcare Leader of the Year" by Bangladesh Healthcare Summit</div>
-                                </div>
-                            </div>
-
-                            <h5 class="mb-3"><i class="bi bi-chat-quote me-2"></i>MD's Message</h5>
-                            <blockquote class="border-start border-4 border-primary ps-3 py-2" style="background: #f8f9fa;">
-                                <em>"In today's rapidly evolving healthcare landscape, we must embrace innovation while staying true to
-                                our core values of compassion and excellence. Our dedicated team works tirelessly to ensure that every
-                                customer receives prompt, efficient, and caring service. We are not just managing healthcare; we are
-                                creating lasting partnerships with our customers and healthcare providers for a healthier tomorrow."</em>
-                            </blockquote>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @endforeach
     </div>
 </section>
+@endif
 
 <!-- Values Section -->
 <section class="values-section">

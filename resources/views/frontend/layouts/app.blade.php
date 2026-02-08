@@ -230,7 +230,7 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link {{ request()->routeIs('frontend.customer-service') ? 'active' : '' }}" href="{{ route('frontend.customer-service') }}">
-                            Customer Service
+                            Customers & Claims
                         </a>
                     </li>
                     <li class="nav-item">
@@ -256,16 +256,37 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
+            @php
+                $contactInfo = \App\Models\ContactInfo::getActive();
+            @endphp
+
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <h5><i class="bi bi-heart-pulse-fill me-2"></i>Prottoy Healthcare</h5>
                     <p class="mb-3">Comprehensive healthcare management system providing quality healthcare services across Bangladesh.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="bi bi-facebook"></i></a>
-                        <a href="#"><i class="bi bi-twitter"></i></a>
-                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                        <a href="#"><i class="bi bi-instagram"></i></a>
-                    </div>
+                    @if($contactInfo)
+                        <div class="social-links">
+                            @if($contactInfo->facebook)
+                                <a href="{{ $contactInfo->facebook }}" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
+                            @endif
+                            @if($contactInfo->twitter)
+                                <a href="{{ $contactInfo->twitter }}" target="_blank" rel="noopener"><i class="bi bi-twitter"></i></a>
+                            @endif
+                            @if($contactInfo->linkedin)
+                                <a href="{{ $contactInfo->linkedin }}" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
+                            @endif
+                            @if($contactInfo->instagram)
+                                <a href="{{ $contactInfo->instagram }}" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
+                            @endif
+                        </div>
+                    @else
+                        <div class="social-links">
+                            <a href="https://facebook.com/prottoyhealthcare" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
+                            <a href="https://twitter.com/prottoyhealthbd" target="_blank" rel="noopener"><i class="bi bi-twitter"></i></a>
+                            <a href="https://linkedin.com/company/prottoy-healthcare" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
+                            <a href="https://instagram.com/prottoyhealthcare" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
+                        </div>
+                    @endif
                 </div>
                 <div class="col-lg-2 col-md-6 mb-4">
                     <h5>Quick Links</h5>
@@ -283,9 +304,18 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Contact Info</h5>
-                    <p class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Dhaka, Bangladesh</p>
-                    <p class="mb-2"><i class="bi bi-telephone-fill me-2"></i>+880 1XXX-XXXXXX</p>
-                    <p class="mb-2"><i class="bi bi-envelope-fill me-2"></i>info@prottoyhealthcare.com</p>
+                    @if($contactInfo)
+                        <p class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>{{ $contactInfo->address }}</p>
+                        <p class="mb-2"><i class="bi bi-telephone-fill me-2"></i>{{ $contactInfo->phone }}</p>
+                        <p class="mb-2"><i class="bi bi-envelope-fill me-2"></i>{{ $contactInfo->email }}</p>
+                        @if($contactInfo->working_hours)
+                            <p class="mb-2"><i class="bi bi-clock-fill me-2"></i>{{ $contactInfo->working_hours }}</p>
+                        @endif
+                    @else
+                        <p class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Dhaka, Bangladesh</p>
+                        <p class="mb-2"><i class="bi bi-telephone-fill me-2"></i>+880 1XXX-XXXXXX</p>
+                        <p class="mb-2"><i class="bi bi-envelope-fill me-2"></i>info@prottoyhealthcare.com</p>
+                    @endif
                 </div>
             </div>
             <div class="footer-bottom text-center">

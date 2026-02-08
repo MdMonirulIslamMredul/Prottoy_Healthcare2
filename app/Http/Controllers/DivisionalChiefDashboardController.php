@@ -8,6 +8,7 @@ use App\Models\District;
 use App\Models\Upzila;
 use App\Models\Package;
 use App\Models\PackagePurchase;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DivisionalChiefDashboardController extends Controller
 {
@@ -175,9 +176,20 @@ class DivisionalChiefDashboardController extends Controller
         $divisionalChief = auth()->user();
 
         // Get PHO IDs in this division
-        $phoIds = User::where('role', 'pho')
-            ->where('division_id', $divisionalChief->division_id)
-            ->pluck('id');
+        $phoQuery = User::where('role', 'pho')
+            ->where('division_id', $divisionalChief->division_id);
+
+        // Apply district filter to PHOs
+        if ($request->filled('district_id')) {
+            $phoQuery->where('district_id', $request->district_id);
+        }
+
+        // Apply upazila filter to PHOs
+        if ($request->filled('upazila_id')) {
+            $phoQuery->where('upzila_id', $request->upazila_id);
+        }
+
+        $phoIds = $phoQuery->pluck('id');
 
         // Get package purchases with filters
         $query = PackagePurchase::whereIn('pho_id', $phoIds)
@@ -196,6 +208,12 @@ class DivisionalChiefDashboardController extends Controller
             $query->where('payment_status', $request->payment_status);
         }
 
+        // Calculate statistics from filtered query (before pagination)
+        $totalPackagesSold = $query->count();
+        $totalSalesAmount = $query->sum('total_price');
+        $totalPaidAmount = $query->sum('paid_amount');
+        $totalDueAmount = $query->sum('due_amount');
+
         $packagePurchases = $query->latest('purchase_date')->paginate(20);
 
         // Get PHOs for filter dropdown
@@ -209,21 +227,97 @@ class DivisionalChiefDashboardController extends Controller
             ->orderBy('name')
             ->get();
 
-        // Calculate statistics
-        $totalPackagesSold = PackagePurchase::whereIn('pho_id', $phoIds)->count();
-        $totalSalesAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('total_price');
-        $totalPaidAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('paid_amount');
-        $totalDueAmount = PackagePurchase::whereIn('pho_id', $phoIds)->sum('due_amount');
+        // Get districts for filter (all districts in this division)
+        $districts = District::where('division_id', $divisionalChief->division_id)
+            ->orderBy('name')
+            ->get();
+
+        // Get upazilas for filter (all upazilas in this division)
+        $upzilas = Upzila::whereIn('district_id', $districts->pluck('id'))
+            ->orderBy('name')
+            ->get();
 
         return view('backend.divisional-chief.package-sales', compact(
             'divisionalChief',
             'packagePurchases',
             'phos',
             'packages',
+            'districts',
+            'upzilas',
             'totalPackagesSold',
             'totalSalesAmount',
             'totalPaidAmount',
             'totalDueAmount'
+        ));
+    }
+
+    public function generatePackageSalesReport(Request $request)
+    {
+        $divisionalChief = auth()->user();
+
+        $phoQuery = User::where('role', 'pho')
+            ->where('division_id', $divisionalChief->division_id);
+
+        if ($request->filled('district_id')) {
+            $phoQuery->where('district_id', $request->district_id);
+        }
+
+        if ($request->filled('upazila_id')) {
+            $phoQuery->where('upzila_id', $request->upazila_id);
+        }
+
+        $phoIds = $phoQuery->pluck('id');
+
+        $query = PackagePurchase::whereIn('pho_id', $phoIds)
+            ->with(['package', 'customer', 'pho', 'payments']);
+
+        if ($request->filled('pho_id')) {
+            $query->where('pho_id', $request->pho_id);
+        }
+
+        if ($request->filled('package_id')) {
+            $query->where('package_id', $request->package_id);
+        }
+
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        // Calculate statistics from filtered query
+        $totalPackagesSold = $query->count();
+        $totalSalesAmount = $query->sum('total_price');
+        $totalPaidAmount = $query->sum('paid_amount');
+        $totalDueAmount = $query->sum('due_amount');
+
+        $packagePurchases = $query->latest('purchase_date')->get();
+
+        $filters = [];
+        if ($request->filled('district_id')) {
+            $filters['District'] = District::find($request->district_id)->name ?? 'All';
+        }
+        if ($request->filled('upazila_id')) {
+            $filters['Upazila'] = Upzila::find($request->upazila_id)->name ?? 'All';
+        }
+        if ($request->filled('pho_id')) {
+            $filters['PHO'] = User::find($request->pho_id)->name ?? 'All';
+        }
+        if ($request->filled('package_id')) {
+            $filters['Package'] = Package::find($request->package_id)->name ?? 'All';
+        }
+        if ($request->filled('payment_status')) {
+            $filters['Payment Status'] = ucfirst($request->payment_status);
+        }
+
+        $reportTitle = 'Divisional Package Sales Report - ' . $divisionalChief->division->name;
+
+        return view('backend.pdf.package-sales-report', compact(
+            'packagePurchases',
+            'totalPackagesSold',
+            'totalSalesAmount',
+            'totalPaidAmount',
+            'totalDueAmount',
+            'reportTitle',
+            'filters'
         ));
     }
 }

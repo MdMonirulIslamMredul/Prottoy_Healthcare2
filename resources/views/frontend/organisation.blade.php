@@ -221,64 +221,27 @@
             <p class="section-subtitle">Hierarchical framework ensuring efficient service delivery</p>
         </div>
 
-        <!-- Level 1: Super Admin -->
-        <div class="org-level">
-            <div class="org-box level-1">
-                <div class="org-icon">
-                    <i class="bi bi-person-badge"></i>
-                </div>
-                <div class="org-title">Super Admin</div>
-                <div class="org-subtitle">Central Management & Oversight</div>
-            </div>
-            <div class="connector"></div>
-        </div>
+        @php
+            $orgRoles = \App\Models\OrganizationalRole::active()->ordered()->get();
+        @endphp
 
-        <!-- Level 2: Divisional Chief -->
-        <div class="org-level">
-            <div class="org-box level-2">
-                <div class="org-icon">
-                    <i class="bi bi-diagram-3"></i>
+        @foreach($orgRoles as $role)
+            <!-- {{ $role->title }} -->
+            <div class="org-level">
+                <div class="org-box level-{{ $role->level }}" style="background: linear-gradient(135deg, {{ $role->color_start }} 0%, {{ $role->color_end }} 100%);">
+                    <div class="org-icon">
+                        <i class="{{ $role->icon }}"></i>
+                    </div>
+                    <div class="org-title">{{ $role->title }}</div>
+                    @if($role->subtitle)
+                        <div class="org-subtitle">{{ $role->subtitle }}</div>
+                    @endif
                 </div>
-                <div class="org-title">Divisional Chief</div>
-                <div class="org-subtitle">Division-Level Management</div>
+                @if(!$loop->last)
+                    <div class="connector"></div>
+                @endif
             </div>
-            <div class="connector"></div>
-        </div>
-
-        <!-- Level 3: District Manager -->
-        <div class="org-level">
-            <div class="org-box level-3">
-                <div class="org-icon">
-                    <i class="bi bi-geo-alt"></i>
-                </div>
-                <div class="org-title">District Manager</div>
-                <div class="org-subtitle">District-Level Operations</div>
-            </div>
-            <div class="connector"></div>
-        </div>
-
-        <!-- Level 4: Upazila Supervisor -->
-        <div class="org-level">
-            <div class="org-box level-4">
-                <div class="org-icon">
-                    <i class="bi bi-building"></i>
-                </div>
-                <div class="org-title">Upazila Supervisor</div>
-                <div class="org-subtitle">Upazila-Level Coordination</div>
-            </div>
-            <div class="connector"></div>
-        </div>
-
-        <!-- Level 5: PHO (Primary Healthcare Officer) -->
-        <div class="org-level">
-            <div class="org-box level-5">
-                <div class="org-icon">
-                    <i class="bi bi-person-hearts"></i>
-                </div>
-                <div class="org-title">PHO (Primary Healthcare Officer)</div>
-                <div class="org-subtitle">Frontline Customer Service</div>
-            </div>
-        </div>
+        @endforeach
 
         <div class="text-center mt-5">
             <p class="text-muted"><i class="bi bi-info-circle me-2"></i>Each level ensures accountability and efficient service delivery across Bangladesh</p>
@@ -294,168 +257,32 @@
             <p class="section-subtitle">Detailed overview of each position's duties and authority</p>
         </div>
 
-        <!-- Super Admin Role -->
-        <div class="role-card">
-            <div class="role-header">
-                <div class="role-icon">
-                    <i class="bi bi-person-badge"></i>
-                </div>
-                <div>
-                    <h3 class="role-name">Super Admin</h3>
-                    <div class="mt-2">
-                        <span class="stats-badge"><i class="bi bi-diagram-3 me-1"></i>8 Divisions</span>
-                        <span class="stats-badge"><i class="bi bi-people me-1"></i>All Users</span>
+        @foreach($orgRoles as $role)
+            <!-- {{ $role->title }} -->
+            <div class="role-card">
+                <div class="role-header">
+                    <div class="role-icon" style="background: linear-gradient(135deg, {{ $role->color_start }} 0%, {{ $role->color_end }} 100%);">
+                        <i class="{{ $role->icon }}"></i>
+                    </div>
+                    <div>
+                        <h3 class="role-name">{{ $role->title }}</h3>
+                        @if($role->stats && count($role->stats) > 0)
+                            <div class="mt-2">
+                                @foreach($role->stats as $stat)
+                                    <span class="stats-badge">{{ $stat }}</span>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
                 </div>
+                <h5 class="mb-3">Key Responsibilities:</h5>
+                <ul class="responsibility-list">
+                    @foreach($role->responsibilities as $responsibility)
+                        <li>{{ $responsibility }}</li>
+                    @endforeach
+                </ul>
             </div>
-            <h5 class="mb-3">Key Responsibilities:</h5>
-            <ul class="responsibility-list">
-                <li>Overall system administration and management</li>
-                <li>Create and manage all hierarchical levels (Divisional Chiefs, District Managers, etc.)</li>
-                <li>Monitor and oversee operations across all 8 divisions of Bangladesh</li>
-                <li>Generate comprehensive reports and analytics for strategic decision-making</li>
-                <li>Set policies, guidelines, and operational standards</li>
-                <li>Manage customer records and resolve escalated issues</li>
-                <li>Ensure data integrity and system security</li>
-                <li>Approve major operational changes and initiatives</li>
-            </ul>
-        </div>
-
-        <!-- Divisional Chief Role -->
-        <div class="role-card">
-            <div class="role-header">
-                <div class="role-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
-                    <i class="bi bi-diagram-3"></i>
-                </div>
-                <div>
-                    <h3 class="role-name">Divisional Chief</h3>
-                    <div class="mt-2">
-                        <span class="stats-badge"><i class="bi bi-geo me-1"></i>1 Division</span>
-                        <span class="stats-badge"><i class="bi bi-building me-1"></i>Multiple Districts</span>
-                    </div>
-                </div>
-            </div>
-            <h5 class="mb-3">Key Responsibilities:</h5>
-            <ul class="responsibility-list">
-                <li>Oversee healthcare operations within assigned division</li>
-                <li>Manage and coordinate with all District Managers in the division</li>
-                <li>Monitor district-level performance and service quality</li>
-                <li>Handle customer management for the entire division</li>
-                <li>Generate divisional reports and performance metrics</li>
-                <li>Ensure compliance with organizational policies and standards</li>
-                <li>Resolve inter-district issues and facilitate coordination</li>
-                <li>Report division-level insights to Super Admin</li>
-            </ul>
-        </div>
-
-        <!-- District Manager Role -->
-        <div class="role-card">
-            <div class="role-header">
-                <div class="role-icon" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <i class="bi bi-geo-alt"></i>
-                </div>
-                <div>
-                    <h3 class="role-name">District Manager</h3>
-                    <div class="mt-2">
-                        <span class="stats-badge"><i class="bi bi-geo-alt me-1"></i>1 District</span>
-                        <span class="stats-badge"><i class="bi bi-buildings me-1"></i>Multiple Upazilas</span>
-                    </div>
-                </div>
-            </div>
-            <h5 class="mb-3">Key Responsibilities:</h5>
-            <ul class="responsibility-list">
-                <li>Manage healthcare services within assigned district</li>
-                <li>Supervise all Upazila Supervisors in the district</li>
-                <li>Monitor upazila-level operations and performance</li>
-                <li>Manage customer records and service delivery in the district</li>
-                <li>Coordinate with Divisional Chief for resources and support</li>
-                <li>Generate district-level reports and analytics</li>
-                <li>Ensure quality standards across all upazilas</li>
-                <li>Address district-wide challenges and implement solutions</li>
-            </ul>
-        </div>
-
-        <!-- Upazila Supervisor Role -->
-        <div class="role-card">
-            <div class="role-header">
-                <div class="role-icon" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                    <i class="bi bi-building"></i>
-                </div>
-                <div>
-                    <h3 class="role-name">Upazila Supervisor</h3>
-                    <div class="mt-2">
-                        <span class="stats-badge"><i class="bi bi-building me-1"></i>1 Upazila</span>
-                        <span class="stats-badge"><i class="bi bi-person-hearts me-1"></i>Multiple PHOs</span>
-                    </div>
-                </div>
-            </div>
-            <h5 class="mb-3">Key Responsibilities:</h5>
-            <ul class="responsibility-list">
-                <li>Oversee healthcare operations within assigned upazila</li>
-                <li>Manage and support all PHOs (Primary Healthcare Officers) in the upazila</li>
-                <li>Monitor PHO performance and customer satisfaction</li>
-                <li>Manage upazila-level customer records and services</li>
-                <li>Generate upazila reports for District Manager review</li>
-                <li>Ensure timely service delivery and quality care</li>
-                <li>Coordinate with healthcare providers in the upazila</li>
-                <li>Address local challenges and implement best practices</li>
-            </ul>
-        </div>
-
-        <!-- PHO Role -->
-        <div class="role-card">
-            <div class="role-header">
-                <div class="role-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                    <i class="bi bi-person-hearts"></i>
-                </div>
-                <div>
-                    <h3 class="role-name">PHO (Primary Healthcare Officer)</h3>
-                    <div class="mt-2">
-                        <span class="stats-badge"><i class="bi bi-people me-1"></i>Direct Customer Contact</span>
-                        <span class="stats-badge"><i class="bi bi-heart-pulse me-1"></i>Frontline Service</span>
-                    </div>
-                </div>
-            </div>
-            <h5 class="mb-3">Key Responsibilities:</h5>
-            <ul class="responsibility-list">
-                <li>Provide direct healthcare services and support to customers</li>
-                <li>Manage assigned customer portfolio and their healthcare needs</li>
-                <li>Process customer registrations and maintain records</li>
-                <li>Assist customers with claims and service requests</li>
-                <li>Ensure timely response to customer inquiries and issues</li>
-                <li>Coordinate with local healthcare providers for service delivery</li>
-                <li>Report customer feedback and service gaps to Upazila Supervisor</li>
-                <li>Maintain accurate documentation and service logs</li>
-                <li>Build strong relationships with customers and community</li>
-            </ul>
-        </div>
-
-        <!-- Customer Role -->
-        <div class="role-card">
-            <div class="role-header">
-                <div class="role-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-                    <i class="bi bi-person"></i>
-                </div>
-                <div>
-                    <h3 class="role-name">Customer</h3>
-                    <div class="mt-2">
-                        <span class="stats-badge"><i class="bi bi-shield-check me-1"></i>Service Recipient</span>
-                        <span class="stats-badge"><i class="bi bi-heart me-1"></i>Healthcare Beneficiary</span>
-                    </div>
-                </div>
-            </div>
-            <h5 class="mb-3">Access & Privileges:</h5>
-            <ul class="responsibility-list">
-                <li>Access healthcare services through designated PHO</li>
-                <li>View and manage personal profile and health information</li>
-                <li>Submit and track healthcare claims and requests</li>
-                <li>Receive notifications about services and updates</li>
-                <li>Contact support team for assistance and guidance</li>
-                <li>Access healthcare provider network in their area</li>
-                <li>View service history and documentation</li>
-                <li>Provide feedback to improve service quality</li>
-            </ul>
-        </div>
+        @endforeach
     </div>
 </section>
 

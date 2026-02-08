@@ -60,17 +60,77 @@
             <span>Packages</span>
         </a>
 
+        <div class="menu-section">Content Management</div>
+
+        <a href="{{ route('superadmin.notices.index') }}" class="menu-item {{ request()->routeIs('superadmin.notices.*') ? 'active' : '' }}">
+            <i class="bi bi-megaphone"></i>
+            <span>Notices</span>
+        </a>
+
+        <a href="{{ route('superadmin.testimonials.index') }}" class="menu-item {{ request()->routeIs('superadmin.testimonials.*') ? 'active' : '' }}">
+            <i class="bi bi-chat-quote"></i>
+            <span>Testimonials</span>
+        </a>
+
         <div class="menu-section">Settings</div>
 
-        <a href="#" class="menu-item">
-            <i class="bi bi-gear"></i>
-            <span>System Settings</span>
-        </a>
+        <div class="menu-item-dropdown">
+            <a href="#websiteSettings" class="menu-item" data-bs-toggle="collapse" aria-expanded="false">
+                <i class="bi bi-gear"></i>
+                <span>Website Settings</span>
+                <i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <div class="collapse submenu" id="websiteSettings">
+                <div class="submenu-section">Homepage</div>
+                <a href="{{ route('superadmin.website.sliders.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.sliders.*') ? 'active' : '' }}">
+                    <i class="bi bi-image"></i>
+                    <span>Hero Sliders</span>
+                </a>
+                <a href="{{ route('superadmin.website.services.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.services.*') ? 'active' : '' }}">
+                    <i class="bi bi-briefcase"></i>
+                    <span>Our Services</span>
+                </a>
+                <a href="{{ route('superadmin.website.news-events.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.news-events.*') ? 'active' : '' }}">
+                    <i class="bi bi-newspaper"></i>
+                    <span>News & Events</span>
+                </a>
+                <a href="{{ route('superadmin.website.notices.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.notices.*') ? 'active' : '' }}">
+                    <i class="bi bi-megaphone"></i>
+                    <span>Notices</span>
+                </a>
+                <div class="submenu-section">About Page</div>
+                <a href="{{ route('superadmin.website.about.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.about.*') ? 'active' : '' }}">
+                    <i class="bi bi-info-square"></i>
+                    <span>About, Mission & Vision</span>
+                </a>
+                <a href="{{ route('superadmin.website.leadership.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.leadership.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i>
+                    <span>About Leadership Team</span>
+                </a>
+                <div class="submenu-section">Other Pages</div>
+                <a href="{{ route('superadmin.website.policies.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.policies.*') ? 'active' : '' }}">
+                    <i class="bi bi-file-text"></i>
+                    <span>Policies & Legal</span>
+                </a>
+                <a href="{{ route('superadmin.website.gallery.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.gallery.*') ? 'active' : '' }}">
+                    <i class="bi bi-images"></i>
+                    <span>Gallery</span>
+                </a>
+                <a href="{{ route('superadmin.website.organizational-roles.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.organizational-roles.*') ? 'active' : '' }}">
+                    <i class="bi bi-diagram-3"></i>
+                    <span>Organizational Roles</span>
+                </a>
+                <a href="{{ route('superadmin.website.contact-info') }}" class="submenu-item {{ request()->routeIs('superadmin.website.contact-info*') ? 'active' : '' }}">
+                    <i class="bi bi-telephone"></i>
+                    <span>Contact Information</span>
+                </a>
+            </div>
+        </div>
 
-        <a href="#" class="menu-item">
+        {{-- <a href="#" class="menu-item">
             <i class="bi bi-shield-lock"></i>
             <span>Security</span>
-        </a>
+        </a> --}}
     </div>
 </aside>
 
@@ -157,6 +217,58 @@
     .menu-item span {
         font-size: 14px;
     }
+
+    .menu-item-dropdown {
+        position: relative;
+    }
+
+    .menu-item-dropdown .menu-item i.bi-chevron-down {
+        font-size: 12px;
+        transition: transform 0.3s ease;
+    }
+
+    .menu-item-dropdown .menu-item[aria-expanded="true"] i.bi-chevron-down {
+        transform: rotate(180deg);
+    }
+
+    .submenu {
+        background: rgba(0, 0, 0, 0.1);
+    }
+
+    .submenu-item {
+        display: flex;
+        align-items: center;
+        padding: 10px 20px 10px 50px;
+        color: rgba(255, 255, 255, 0.75);
+        text-decoration: none;
+        transition: all 0.3s ease;
+        font-size: 13px;
+    }
+
+    .submenu-item:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+    .submenu-item.active {
+        background: rgba(255, 255, 255, 0.15);
+        color: white;
+    }
+
+    .submenu-item i {
+        font-size: 14px;
+        width: 25px;
+    }
+.submenu-section {
+        padding: 12px 20px 8px 50px;
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: rgba(255, 255, 255, 0.5);
+        font-weight: 600;
+        margin-top: 5px;
+    }
+
 
     /* Mobile Styles */
     @media (max-width: 768px) {

@@ -273,207 +273,89 @@
 </div>
 
 <!-- Gallery Section -->
+@php
+    $galleryImages = \App\Models\GalleryImage::active()->ordered()->get();
+    $categories = ['events' => 'Events', 'facilities' => 'Facilities', 'community' => 'Community', 'awards' => 'Awards'];
+    $categoryCounts = [
+        'events' => $galleryImages->where('category', 'events')->count(),
+        'facilities' => $galleryImages->where('category', 'facilities')->count(),
+        'community' => $galleryImages->where('category', 'community')->count(),
+        'awards' => $galleryImages->where('category', 'awards')->count(),
+    ];
+@endphp
+
 <section class="gallery-section">
     <div class="container">
         <!-- Filter Buttons -->
         <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">
-                <i class="bi bi-grid me-2"></i>All Photos
+                <i class="bi bi-grid me-2"></i>All Photos ({{ $galleryImages->count() }})
             </button>
-            <button class="filter-btn" data-filter="events">
-                <i class="bi bi-calendar-event me-2"></i>Events
-            </button>
-            <button class="filter-btn" data-filter="facilities">
-                <i class="bi bi-building me-2"></i>Facilities
-            </button>
-            <button class="filter-btn" data-filter="community">
-                <i class="bi bi-people me-2"></i>Community
-            </button>
-            <button class="filter-btn" data-filter="awards">
-                <i class="bi bi-trophy me-2"></i>Awards
-            </button>
+            @foreach($categories as $key => $label)
+                @if($categoryCounts[$key] > 0)
+                <button class="filter-btn" data-filter="{{ $key }}">
+                    <i class="bi bi-{{ $key == 'events' ? 'calendar-event' : ($key == 'facilities' ? 'building' : ($key == 'community' ? 'people' : 'trophy')) }} me-2"></i>{{ $label }} ({{ $categoryCounts[$key] }})
+                </button>
+                @endif
+            @endforeach
         </div>
 
         <!-- Gallery Grid -->
+        @if($galleryImages->count() > 0)
         <div class="gallery-grid">
-            <!-- Event Photos -->
-            <div class="gallery-item" data-category="events" data-index="0">
-                <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500" alt="Annual Healthcare Summit 2024">
+            @foreach($galleryImages as $index => $image)
+            <div class="gallery-item" data-category="{{ $image->category }}" data-index="{{ $index }}" data-description="{{ $image->description ?? '' }}">
+                <img src="{{ asset('storage/' . $image->image) }}" alt="{{ $image->title }}">
                 <div class="gallery-overlay">
-                    <div class="gallery-title">Annual Healthcare Summit 2024</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Events</div>
+                    <div class="gallery-title">{{ $image->title }}</div>
+                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>{{ ucfirst($image->category) }}</div>
                 </div>
             </div>
-
-            <div class="gallery-item" data-category="events" data-index="1">
-                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=500" alt="Leadership Conference">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Leadership Conference</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Events</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="events" data-index="2">
-                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=500" alt="Customer Appreciation Day">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Customer Appreciation Day</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Events</div>
-                </div>
-            </div>
-
-            <!-- Facilities Photos -->
-            <div class="gallery-item" data-category="facilities" data-index="3">
-                <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500" alt="Head Office - Dhaka">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Head Office - Dhaka</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Facilities</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="facilities" data-index="4">
-                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=500" alt="Regional Office - Chittagong">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Regional Office - Chittagong</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Facilities</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="facilities" data-index="5">
-                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=500" alt="Customer Service Center">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Customer Service Center</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Facilities</div>
-                </div>
-            </div>
-
-            <!-- Community Photos -->
-            <div class="gallery-item" data-category="community" data-index="6">
-                <img src="https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=500" alt="Health Camp in Rural Areas">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Health Camp in Rural Areas</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Community</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="community" data-index="7">
-                <img src="https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?w=500" alt="Healthcare Awareness Program">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Healthcare Awareness Program</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Community</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="community" data-index="8">
-                <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=500" alt="Community Outreach">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Community Outreach</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Community</div>
-                </div>
-            </div>
-
-            <!-- Awards Photos -->
-            <div class="gallery-item" data-category="awards" data-index="9">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=500" alt="National Healthcare Excellence Award">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">National Healthcare Excellence Award</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Awards</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="awards" data-index="10">
-                <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=500" alt="Best Customer Service Recognition">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Best Customer Service Recognition</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Awards</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="awards" data-index="11">
-                <img src="https://images.unsplash.com/photo-1515169273894-7e876dcf13da?w=500" alt="Innovation in Healthcare Award">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Innovation in Healthcare Award</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Awards</div>
-                </div>
-            </div>
-
-            <!-- More Events -->
-            <div class="gallery-item" data-category="events" data-index="12">
-                <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=500" alt="PHO Training Workshop">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">PHO Training Workshop</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Events</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="community" data-index="13">
-                <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=500" alt="Free Medical Check-up Camp">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Free Medical Check-up Camp</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Community</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="facilities" data-index="14">
-                <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=500" alt="Modern IT Infrastructure">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Modern IT Infrastructure</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Facilities</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="events" data-index="15">
-                <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=500" alt="Partnership Signing Ceremony">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Partnership Signing Ceremony</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Events</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="community" data-index="16">
-                <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?w=500" alt="School Health Program">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">School Health Program</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Community</div>
-                </div>
-            </div>
-
-            <div class="gallery-item" data-category="events" data-index="17">
-                <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=500" alt="Team Building Event">
-                <div class="gallery-overlay">
-                    <div class="gallery-title">Team Building Event</div>
-                    <div class="gallery-category"><i class="bi bi-tag me-1"></i>Events</div>
-                </div>
-            </div>
+            @endforeach
         </div>
+        @else
+        <div class="text-center py-5">
+            <i class="bi bi-images fs-1 text-muted d-block mb-3"></i>
+            <h4 class="text-muted">No Images Available</h4>
+            <p class="text-muted">Gallery images will appear here once they are added</p>
+        </div>
+        @endif
     </div>
 </section>
 
 <!-- Stats Section -->
+@php
+    $totalImages = $galleryImages->count();
+    $eventCount = $categoryCounts['events'];
+    $communityCount = $categoryCounts['community'];
+    $awardsCount = $categoryCounts['awards'];
+@endphp
+
 <section class="stats-section">
     <div class="container">
         <div class="row">
             <div class="col-lg-3 col-md-6">
                 <div class="stat-item">
-                    <div class="stat-number">50+</div>
-                    <div class="stat-label">Events Organized</div>
+                    <div class="stat-number">{{ $eventCount }}+</div>
+                    <div class="stat-label">Events Captured</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="stat-item">
-                    <div class="stat-number">100+</div>
+                    <div class="stat-number">{{ $communityCount }}+</div>
                     <div class="stat-label">Community Programs</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="stat-item">
-                    <div class="stat-number">15+</div>
+                    <div class="stat-number">{{ $awardsCount }}+</div>
                     <div class="stat-label">Awards Received</div>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
                 <div class="stat-item">
-                    <div class="stat-number">10K+</div>
-                    <div class="stat-label">Lives Touched</div>
+                    <div class="stat-number">{{ $totalImages }}+</div>
+                    <div class="stat-label">Total Moments</div>
                 </div>
             </div>
         </div>
@@ -555,10 +437,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const imgSrc = this.querySelector('img').src;
             const title = this.querySelector('.gallery-title').textContent;
             const category = this.querySelector('.gallery-category').textContent;
+            const description = this.getAttribute('data-description');
 
             currentIndex = visibleItems.indexOf(this);
             modalImg.src = imgSrc;
-            modalCaption.innerHTML = `<strong>${title}</strong><br>${category}`;
+            let captionHTML = `<strong>${title}</strong><br>${category}`;
+            if (description) {
+                captionHTML += `<br><span style="font-size: 0.9em; opacity: 0.9;">${description}</span>`;
+            }
+            modalCaption.innerHTML = captionHTML;
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
@@ -595,9 +482,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const imgSrc = item.querySelector('img').src;
         const title = item.querySelector('.gallery-title').textContent;
         const category = item.querySelector('.gallery-category').textContent;
+        const description = item.getAttribute('data-description');
 
         modalImg.src = imgSrc;
-        modalCaption.innerHTML = `<strong>${title}</strong><br>${category}`;
+        let captionHTML = `<strong>${title}</strong><br>${category}`;
+        if (description) {
+            captionHTML += `<br><span style="font-size: 0.9em; opacity: 0.9;">${description}</span>`;
+        }
+        modalCaption.innerHTML = captionHTML;
     }
 
     // Keyboard navigation
