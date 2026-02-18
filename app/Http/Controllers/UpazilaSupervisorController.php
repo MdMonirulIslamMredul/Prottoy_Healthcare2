@@ -173,4 +173,12 @@ class UpazilaSupervisorController extends Controller
         return redirect()->route('superadmin.upazila-supervisors.index')
             ->with('success', 'Upazila Supervisor deleted successfully.');
     }
+    public function show(User $upazilaSupervisor)
+    {
+        if ($upazilaSupervisor->role !== 'upazila_supervisor') {
+            abort(404);
+        }
+
+        return view('backend.superadmin.upazila-supervisors.show', compact('upazilaSupervisor'));
+    }
 }

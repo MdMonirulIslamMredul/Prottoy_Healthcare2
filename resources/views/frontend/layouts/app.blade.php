@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="@yield('meta_description', 'Prottoy Healthcare - Comprehensive Healthcare Management System')">
-    <title>@yield('title', 'Home') - Prottoy Healthcare</title>
+    <title>@yield('title', 'Home') - Prottoy Healthcare LTD </title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,7 +14,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
     <style>
         :root {
@@ -167,6 +169,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -196,12 +199,14 @@
         @yield('styles')
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light sticky-top">
         <div class="container">
             <a class="navbar-brand" href="{{ route('frontend.home') }}">
-                <i class="bi bi-heart-pulse-fill me-2"></i>Prottoy Healthcare
+
+                Prottoy Healthcare LTD
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -209,32 +214,38 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.home') ? 'active' : '' }}" href="{{ route('frontend.home') }}">
+                        <a class="nav-link {{ request()->routeIs('frontend.home') ? 'active' : '' }}"
+                            href="{{ route('frontend.home') }}">
                             Home
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.about') ? 'active' : '' }}" href="{{ route('frontend.about') }}">
+                        <a class="nav-link {{ request()->routeIs('frontend.about') ? 'active' : '' }}"
+                            href="{{ route('frontend.about') }}">
                             About Us
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.organisation') ? 'active' : '' }}" href="{{ route('frontend.organisation') }}">
+                        <a class="nav-link {{ request()->routeIs('frontend.organisation') ? 'active' : '' }}"
+                            href="{{ route('frontend.organisation') }}">
                             Organisation & Leadership
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.policy') ? 'active' : '' }}" href="{{ route('frontend.policy') }}">
+                        <a class="nav-link {{ request()->routeIs('frontend.policy') ? 'active' : '' }}"
+                            href="{{ route('frontend.policy') }}">
                             Policy & Legal
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.customer-service') ? 'active' : '' }}" href="{{ route('frontend.customer-service') }}">
+                        <a class="nav-link {{ request()->routeIs('frontend.customer-service') ? 'active' : '' }}"
+                            href="{{ route('frontend.customer-service') }}">
                             Customers & Claims
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link {{ request()->routeIs('frontend.gallery') ? 'active' : '' }}" href="{{ route('frontend.gallery') }}">
+                        <a class="nav-link {{ request()->routeIs('frontend.gallery') ? 'active' : '' }}"
+                            href="{{ route('frontend.gallery') }}">
                             Gallery
                         </a>
                     </li>
@@ -263,28 +274,37 @@
             <div class="row">
                 <div class="col-lg-4 col-md-6 mb-4">
                     <h5><i class="bi bi-heart-pulse-fill me-2"></i>Prottoy Healthcare</h5>
-                    <p class="mb-3">Comprehensive healthcare management system providing quality healthcare services across Bangladesh.</p>
-                    @if($contactInfo)
+                    <p class="mb-3">Comprehensive healthcare management system providing quality healthcare services
+                        across Bangladesh.</p>
+                    @if ($contactInfo)
                         <div class="social-links">
-                            @if($contactInfo->facebook)
-                                <a href="{{ $contactInfo->facebook }}" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
+                            @if ($contactInfo->facebook)
+                                <a href="{{ $contactInfo->facebook }}" target="_blank" rel="noopener"><i
+                                        class="bi bi-facebook"></i></a>
                             @endif
-                            @if($contactInfo->twitter)
-                                <a href="{{ $contactInfo->twitter }}" target="_blank" rel="noopener"><i class="bi bi-twitter"></i></a>
+                            @if ($contactInfo->twitter)
+                                <a href="{{ $contactInfo->twitter }}" target="_blank" rel="noopener"><i
+                                        class="bi bi-twitter"></i></a>
                             @endif
-                            @if($contactInfo->linkedin)
-                                <a href="{{ $contactInfo->linkedin }}" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
+                            @if ($contactInfo->linkedin)
+                                <a href="{{ $contactInfo->linkedin }}" target="_blank" rel="noopener"><i
+                                        class="bi bi-linkedin"></i></a>
                             @endif
-                            @if($contactInfo->instagram)
-                                <a href="{{ $contactInfo->instagram }}" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
+                            @if ($contactInfo->instagram)
+                                <a href="{{ $contactInfo->instagram }}" target="_blank" rel="noopener"><i
+                                        class="bi bi-instagram"></i></a>
                             @endif
                         </div>
                     @else
                         <div class="social-links">
-                            <a href="https://facebook.com/prottoyhealthcare" target="_blank" rel="noopener"><i class="bi bi-facebook"></i></a>
-                            <a href="https://twitter.com/prottoyhealthbd" target="_blank" rel="noopener"><i class="bi bi-twitter"></i></a>
-                            <a href="https://linkedin.com/company/prottoy-healthcare" target="_blank" rel="noopener"><i class="bi bi-linkedin"></i></a>
-                            <a href="https://instagram.com/prottoyhealthcare" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
+                            <a href="https://facebook.com/prottoyhealthcare" target="_blank" rel="noopener"><i
+                                    class="bi bi-facebook"></i></a>
+                            <a href="https://twitter.com/prottoyhealthbd" target="_blank" rel="noopener"><i
+                                    class="bi bi-twitter"></i></a>
+                            <a href="https://linkedin.com/company/prottoy-healthcare" target="_blank" rel="noopener"><i
+                                    class="bi bi-linkedin"></i></a>
+                            <a href="https://instagram.com/prottoyhealthcare" target="_blank" rel="noopener"><i
+                                    class="bi bi-instagram"></i></a>
                         </div>
                     @endif
                 </div>
@@ -304,12 +324,13 @@
                 </div>
                 <div class="col-lg-3 col-md-6 mb-4">
                     <h5>Contact Info</h5>
-                    @if($contactInfo)
+                    @if ($contactInfo)
                         <p class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>{{ $contactInfo->address }}</p>
                         <p class="mb-2"><i class="bi bi-telephone-fill me-2"></i>{{ $contactInfo->phone }}</p>
                         <p class="mb-2"><i class="bi bi-envelope-fill me-2"></i>{{ $contactInfo->email }}</p>
-                        @if($contactInfo->working_hours)
-                            <p class="mb-2"><i class="bi bi-clock-fill me-2"></i>{{ $contactInfo->working_hours }}</p>
+                        @if ($contactInfo->working_hours)
+                            <p class="mb-2"><i class="bi bi-clock-fill me-2"></i>{{ $contactInfo->working_hours }}
+                            </p>
                         @endif
                     @else
                         <p class="mb-2"><i class="bi bi-geo-alt-fill me-2"></i>Dhaka, Bangladesh</p>
@@ -329,4 +350,5 @@
 
     @stack('scripts')
 </body>
+
 </html>

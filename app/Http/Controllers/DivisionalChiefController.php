@@ -144,4 +144,13 @@ class DivisionalChiefController extends Controller
         return redirect()->route('superadmin.divisional-chiefs.index')
             ->with('success', 'Divisional Chief deleted successfully.');
     }
+
+    public function show(User $divisionalChief)
+    {
+        if ($divisionalChief->role !== 'divisional_chief') {
+            abort(404);
+        }
+
+        return view('backend.superadmin.divisional-chiefs.show', compact('divisionalChief'));
+    }
 }

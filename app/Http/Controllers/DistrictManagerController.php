@@ -167,4 +167,13 @@ class DistrictManagerController extends Controller
         return redirect()->route('superadmin.district-managers.index')
             ->with('success', 'District Manager deleted successfully.');
     }
+
+    public function show(User $districtManager)
+    {
+        if ($districtManager->role !== 'district_manager') {
+            abort(404);
+        }
+
+        return view('backend.superadmin.district-managers.show', compact('districtManager'));
+    }
 }

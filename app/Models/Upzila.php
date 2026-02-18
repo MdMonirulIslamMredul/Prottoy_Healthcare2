@@ -51,4 +51,12 @@ class Upzila extends Model
     {
         return $this->hasMany(User::class, 'upzila_id')->where('role', 'pho');
     }
+
+    /**
+     * Get all unions in this upazila.
+     */
+    public function unions()
+    {
+        return $this->hasMany(Union::class, 'upazilla_id');
+    }
 }

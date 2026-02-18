@@ -28,6 +28,7 @@ class User extends Authenticatable
         'division_id',
         'district_id',
         'upzila_id',
+        'union_id',
         'upazila_supervisor_id',
         'pho_id',
     ];
@@ -76,6 +77,14 @@ class User extends Authenticatable
     public function upzila()
     {
         return $this->belongsTo(Upzila::class);
+    }
+
+    /**
+     * Get the union that the user belongs to.
+     */
+    public function union()
+    {
+        return $this->belongsTo(Union::class);
     }
 
     /**

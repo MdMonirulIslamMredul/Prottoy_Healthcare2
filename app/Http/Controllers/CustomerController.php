@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Union;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
@@ -12,7 +13,7 @@ class CustomerController extends Controller
     public function index()
     {
         $customers = User::where('role', 'customer')
-            ->with(['division', 'district', 'upzila', 'pho'])
+            ->with(['division', 'district', 'upzila', 'union', 'pho'])
             ->withCount('packagePurchases')
             ->withSum('packagePurchases', 'total_price')
             ->withSum('packagePurchases', 'paid_amount')
@@ -41,6 +42,7 @@ class CustomerController extends Controller
             'division_id' => 'required|exists:divisions,id',
             'district_id' => 'required|exists:districts,id',
             'upzila_id' => 'required|exists:upzilas,id',
+            'union_id' => 'nullable|exists:unions,id',
             'pho_id' => 'required|exists:users,id',
         ]);
 
@@ -57,6 +59,7 @@ class CustomerController extends Controller
             'division_id' => $request->division_id,
             'district_id' => $request->district_id,
             'upzila_id' => $request->upzila_id,
+            'union_id' => $request->union_id,
             'upazila_supervisor_id' => $pho->upazila_supervisor_id,
             'pho_id' => $request->pho_id,
             'created_by' => auth()->id(),
@@ -87,6 +90,7 @@ class CustomerController extends Controller
             'division_id' => 'required|exists:divisions,id',
             'district_id' => 'required|exists:districts,id',
             'upzila_id' => 'required|exists:upzilas,id',
+            'union_id' => 'nullable|exists:unions,id',
             'pho_id' => 'required|exists:users,id',
         ]);
 
@@ -101,6 +105,7 @@ class CustomerController extends Controller
             'division_id' => $request->division_id,
             'district_id' => $request->district_id,
             'upzila_id' => $request->upzila_id,
+            'union_id' => $request->union_id,
             'upazila_supervisor_id' => $pho->upazila_supervisor_id,
             'pho_id' => $request->pho_id,
         ];
@@ -115,6 +120,19 @@ class CustomerController extends Controller
             ->with('success', 'Customer updated successfully');
     }
 
+    public function show($id)
+    {
+        $customer = User::where('role', 'customer')
+            ->with(['division', 'district', 'upzila', 'union', 'pho'])
+            ->withCount('packagePurchases')
+            ->withSum('packagePurchases', 'total_price')
+            ->withSum('packagePurchases', 'paid_amount')
+            ->withSum('packagePurchases', 'due_amount')
+            ->findOrFail($id);
+
+        return view('backend.superadmin.customers.show', compact('customer'));
+    }
+
     public function destroy($id)
     {
         $customer = User::where('role', 'customer')->findOrFail($id);
@@ -122,6 +140,16 @@ class CustomerController extends Controller
 
         return redirect()->route('superadmin.customers.index')
             ->with('success', 'Customer deleted successfully');
+    }
+
+    // AJAX endpoint to get unions by upazila
+    public function getUnions($upazilaId)
+    {
+        $unions = Union::where('upazilla_id', $upazilaId)
+            ->orderBy('name')
+            ->get(['id', 'name', 'bn_name']);
+
+        return response()->json(['unions' => $unions]);
     }
 
     // AJAX endpoint to get PHOs by upazila supervisor

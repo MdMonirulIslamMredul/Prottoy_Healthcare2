@@ -9,65 +9,76 @@
     </div>
 
     <div class="sidebar-menu">
-        <a href="{{ route('superadmin.dashboard') }}" class="menu-item {{ request()->routeIs('superadmin.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.dashboard') }}"
+            class="menu-item {{ request()->routeIs('superadmin.dashboard') ? 'active' : '' }}">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
 
         <div class="menu-section">Users Management</div>
 
-        <a href="{{ route('superadmin.divisional-chiefs.index') }}" class="menu-item {{ request()->routeIs('superadmin.divisional-chiefs.*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.divisional-chiefs.index') }}"
+            class="menu-item {{ request()->routeIs('superadmin.divisional-chiefs.*') ? 'active' : '' }}">
             <i class="bi bi-star-fill"></i>
-            <span>Divisional Chiefs</span>
+            <span>Sales Managers</span>
         </a>
 
-        <a href="{{ route('superadmin.district-managers.index') }}" class="menu-item {{ request()->routeIs('superadmin.district-managers.*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.district-managers.index') }}"
+            class="menu-item {{ request()->routeIs('superadmin.district-managers.*') ? 'active' : '' }}">
             <i class="bi bi-building"></i>
-            <span>District Managers</span>
+            <span>Area Managers</span>
         </a>
 
-        <a href="{{ route('superadmin.upazila-supervisors.index') }}" class="menu-item {{ request()->routeIs('superadmin.upazila-supervisors.*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.upazila-supervisors.index') }}"
+            class="menu-item {{ request()->routeIs('superadmin.upazila-supervisors.*') ? 'active' : '' }}">
             <i class="bi bi-pin-map-fill"></i>
-            <span>Upazila Supervisors</span>
+            <span>Marketing Supervisors</span>
         </a>
 
-        <a href="{{ route('superadmin.phos.index') }}" class="menu-item {{ request()->routeIs('superadmin.phos.*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.phos.index') }}"
+            class="menu-item {{ request()->routeIs('superadmin.phos.*') ? 'active' : '' }}">
             <i class="bi bi-person-vcard"></i>
-            <span>PHOs</span>
+            <span> Field Officers </span>
         </a>
 
-        <a href="{{ route('superadmin.customers.index') }}" class="menu-item {{ request()->routeIs('superadmin.customers.*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.customers.index') }}"
+            class="menu-item {{ request()->routeIs('superadmin.customers.*') ? 'active' : '' }}">
             <i class="bi bi-people-fill"></i>
             <span>Customers</span>
         </a>
 
-        <a href="{{ route('superadmin.all-users') }}" class="menu-item {{ request()->routeIs('superadmin.all-users') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.all-users') }}"
+            class="menu-item {{ request()->routeIs('superadmin.all-users') ? 'active' : '' }}">
             <i class="bi bi-people"></i>
             <span>All Users</span>
         </a>
 
         <div class="menu-section">Package Management</div>
 
-        <a href="{{ route('packages.index') }}" class="menu-item {{ request()->routeIs('packages.*') ? 'active' : '' }}">
+        <a href="{{ route('packages.index') }}"
+            class="menu-item {{ request()->routeIs('packages.*') ? 'active' : '' }}">
             <i class="bi bi-box-seam"></i>
             <span>Healthcare Packages</span>
         </a>
 
         <div class="menu-section">Sales Management</div>
 
-        <a href="{{ route('superadmin.package-sales') }}" class="menu-item {{ request()->routeIs('superadmin.package-sales') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.package-sales') }}"
+            class="menu-item {{ request()->routeIs('superadmin.package-sales') ? 'active' : '' }}">
             <i class="bi bi-cart-check"></i>
             <span>Packages</span>
         </a>
 
         <div class="menu-section">Content Management</div>
 
-        <a href="{{ route('superadmin.notices.index') }}" class="menu-item {{ request()->routeIs('superadmin.notices.*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.notices.index') }}"
+            class="menu-item {{ request()->routeIs('superadmin.notices.*') ? 'active' : '' }}">
             <i class="bi bi-megaphone"></i>
             <span>Notices</span>
         </a>
 
-        <a href="{{ route('superadmin.testimonials.index') }}" class="menu-item {{ request()->routeIs('superadmin.testimonials.*') ? 'active' : '' }}">
+        <a href="{{ route('superadmin.testimonials.index') }}"
+            class="menu-item {{ request()->routeIs('superadmin.testimonials.*') ? 'active' : '' }}">
             <i class="bi bi-chat-quote"></i>
             <span>Testimonials</span>
         </a>
@@ -82,45 +93,55 @@
             </a>
             <div class="collapse submenu" id="websiteSettings">
                 <div class="submenu-section">Homepage</div>
-                <a href="{{ route('superadmin.website.sliders.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.sliders.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.sliders.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.sliders.*') ? 'active' : '' }}">
                     <i class="bi bi-image"></i>
                     <span>Hero Sliders</span>
                 </a>
-                <a href="{{ route('superadmin.website.services.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.services.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.services.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.services.*') ? 'active' : '' }}">
                     <i class="bi bi-briefcase"></i>
                     <span>Our Services</span>
                 </a>
-                <a href="{{ route('superadmin.website.news-events.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.news-events.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.news-events.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.news-events.*') ? 'active' : '' }}">
                     <i class="bi bi-newspaper"></i>
                     <span>News & Events</span>
                 </a>
-                <a href="{{ route('superadmin.website.notices.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.notices.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.notices.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.notices.*') ? 'active' : '' }}">
                     <i class="bi bi-megaphone"></i>
                     <span>Notices</span>
                 </a>
                 <div class="submenu-section">About Page</div>
-                <a href="{{ route('superadmin.website.about.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.about.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.about.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.about.*') ? 'active' : '' }}">
                     <i class="bi bi-info-square"></i>
                     <span>About, Mission & Vision</span>
                 </a>
-                <a href="{{ route('superadmin.website.leadership.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.leadership.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.leadership.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.leadership.*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i>
                     <span>About Leadership Team</span>
                 </a>
                 <div class="submenu-section">Other Pages</div>
-                <a href="{{ route('superadmin.website.policies.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.policies.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.policies.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.policies.*') ? 'active' : '' }}">
                     <i class="bi bi-file-text"></i>
                     <span>Policies & Legal</span>
                 </a>
-                <a href="{{ route('superadmin.website.gallery.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.gallery.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.gallery.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.gallery.*') ? 'active' : '' }}">
                     <i class="bi bi-images"></i>
                     <span>Gallery</span>
                 </a>
-                <a href="{{ route('superadmin.website.organizational-roles.index') }}" class="submenu-item {{ request()->routeIs('superadmin.website.organizational-roles.*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.organizational-roles.index') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.organizational-roles.*') ? 'active' : '' }}">
                     <i class="bi bi-diagram-3"></i>
                     <span>Organizational Roles</span>
                 </a>
-                <a href="{{ route('superadmin.website.contact-info') }}" class="submenu-item {{ request()->routeIs('superadmin.website.contact-info*') ? 'active' : '' }}">
+                <a href="{{ route('superadmin.website.contact-info') }}"
+                    class="submenu-item {{ request()->routeIs('superadmin.website.contact-info*') ? 'active' : '' }}">
                     <i class="bi bi-telephone"></i>
                     <span>Contact Information</span>
                 </a>
@@ -259,7 +280,8 @@
         font-size: 14px;
         width: 25px;
     }
-.submenu-section {
+
+    .submenu-section {
         padding: 12px 20px 8px 50px;
         font-size: 10px;
         text-transform: uppercase;

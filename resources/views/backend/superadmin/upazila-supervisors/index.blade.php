@@ -1,79 +1,84 @@
 @extends('backend.layouts.app')
 
 @section('content')
-<div class="container-fluid py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Upazila Supervisors</h2>
-        <a href="{{ route('superadmin.upazila-supervisors.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle me-2"></i>Add New Upazila Supervisor
-        </a>
-    </div>
-
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div class="container-fluid py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Upazila Supervisors</h2>
+            <a href="{{ route('superadmin.upazila-supervisors.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle me-2"></i>Add New Upazila Supervisor
+            </a>
         </div>
-    @endif
 
-    <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead class="table-light">
-                        <tr>
-                            <th>SL</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Division</th>
-                            <th>District</th>
-                            <th>Upazila</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse($upazilaSupervisors as $index => $supervisor)
-                            <tr>
-                                <td>{{ $upazilaSupervisors->firstItem() + $index }}</td>
-                                <td>{{ $supervisor->name }}</td>
-                                <td>{{ $supervisor->email }}</td>
-                                <td>{{ $supervisor->division->name ?? 'N/A' }}</td>
-                                <td>{{ $supervisor->district->name ?? 'N/A' }}</td>
-                                <td>{{ $supervisor->upzila->name ?? 'N/A' }}</td>
-                                <td>
-                                    <a href="{{ route('superadmin.upazila-supervisors.edit', $supervisor->id) }}"
-                                       class="btn btn-sm btn-outline-primary">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-                                    <form action="{{ route('superadmin.upazila-supervisors.destroy', $supervisor->id) }}"
-                                          method="POST" class="d-inline">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-outline-danger"
-                                                onclick="return confirm('Are you sure you want to delete this upazila supervisor?')">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="7" class="text-center text-muted py-4">
-                                    <i class="bi bi-inbox fs-1 d-block mb-2"></i>
-                                    No upazila supervisors found
-                                </td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
+        @endif
 
-            @if($upazilaSupervisors->hasPages())
-                <div class="mt-3">
-                    {{ $upazilaSupervisors->links() }}
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>SL</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Division</th>
+                                <th>District</th>
+                                <th>Upazila</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse($upazilaSupervisors as $index => $supervisor)
+                                <tr>
+                                    <td>{{ $upazilaSupervisors->firstItem() + $index }}</td>
+                                    <td>{{ $supervisor->name }}</td>
+                                    <td>{{ $supervisor->email }}</td>
+                                    <td>{{ $supervisor->division->name ?? 'N/A' }}</td>
+                                    <td>{{ $supervisor->district->name ?? 'N/A' }}</td>
+                                    <td>{{ $supervisor->upzila->name ?? 'N/A' }}</td>
+                                    <td>
+                                        <a href="{{ route('superadmin.upazila-supervisors.show', $supervisor->id) }}"
+                                            class="btn btn-sm btn-outline-info">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <a href="{{ route('superadmin.upazila-supervisors.edit', $supervisor->id) }}"
+                                            class="btn btn-sm btn-outline-primary">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form
+                                            action="{{ route('superadmin.upazila-supervisors.destroy', $supervisor->id) }}"
+                                            method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger"
+                                                onclick="return confirm('Are you sure you want to delete this upazila supervisor?')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                        No upazila supervisors found
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
-            @endif
+
+                @if ($upazilaSupervisors->hasPages())
+                    <div class="mt-3">
+                        {{ $upazilaSupervisors->links() }}
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
-</div>
 @endsection

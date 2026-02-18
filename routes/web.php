@@ -87,6 +87,8 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
         'update' => 'superadmin.divisional-chiefs.update',
         'destroy' => 'superadmin.divisional-chiefs.destroy',
     ]);
+    // divisional chief details show route
+    Route::get('/divisional-chiefs/{divisionalChief}', [DivisionalChiefController::class, 'show'])->name('superadmin.divisional-chiefs.show');
 
     // District Managers Management
     Route::resource('district-managers', DistrictManagerController::class)->names([
@@ -97,6 +99,8 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
         'update' => 'superadmin.district-managers.update',
         'destroy' => 'superadmin.district-managers.destroy',
     ]);
+    // district manager details show route
+    Route::get('/district-managers/{districtManager}', [DistrictManagerController::class, 'show'])->name('superadmin.district-managers.show');
 
     // Upazila Supervisors Management
     Route::resource('upazila-supervisors', UpazilaSupervisorController::class)->names([
@@ -107,6 +111,8 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
         'update' => 'superadmin.upazila-supervisors.update',
         'destroy' => 'superadmin.upazila-supervisors.destroy',
     ]);
+    // upazila supervisor details show route
+    Route::get('/upazila-supervisors/{upazilaSupervisor}', [UpazilaSupervisorController::class, 'show'])->name('superadmin.upazila-supervisors.show');
 
     // AJAX endpoint for getting districts by division
     Route::get('/get-districts/{division}', [DistrictManagerController::class, 'getDistricts'])
@@ -125,6 +131,8 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
         'update' => 'superadmin.phos.update',
         'destroy' => 'superadmin.phos.destroy',
     ]);
+    // PHO details show route
+    Route::get('/phos/{pho}', [PHOController::class, 'show'])->name('superadmin.phos.show');
 
     // Customer Management
     Route::resource('customers', CustomerController::class)->names([
@@ -135,6 +143,8 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
         'update' => 'superadmin.customers.update',
         'destroy' => 'superadmin.customers.destroy',
     ]);
+    // customer details show route
+    Route::get('/customers/{customer}', [CustomerController::class, 'show'])->name('superadmin.customers.show');
 
     // AJAX endpoints for hierarchical user selection
     Route::get('/get-district-managers/{divisionalChief}', [PHOController::class, 'getDistrictManagers'])
@@ -142,6 +152,9 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
 
     Route::get('/get-upazila-supervisors/{districtManager}', [PHOController::class, 'getUpazilaSupervisors'])
         ->name('superadmin.get-upazila-supervisors');
+
+    Route::get('/get-unions/{upazila}', [CustomerController::class, 'getUnions'])
+        ->name('superadmin.get-unions');
 
     Route::get('/get-phos/{upazilaSupervisor}', [CustomerController::class, 'getPHOs'])
         ->name('superadmin.get-phos');

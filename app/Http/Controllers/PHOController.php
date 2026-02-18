@@ -132,4 +132,18 @@ class PHOController extends Controller
 
         return response()->json(['upazilaSupervisors' => $upazilaSupervisors]);
     }
+
+    public function show($id)
+    {
+        $pho = User::where('role', 'pho')
+            ->with(['division', 'district', 'upzila', 'upazilaSupervisor'])
+            ->withCount('packageSales')
+            ->withSum('packageSales', 'total_price')
+            ->withSum('packageSales', 'paid_amount')
+            ->withSum('packageSales', 'due_amount')
+            ->findOrFail($id);
+
+        return view('backend.superadmin.phos.show', compact('pho'));
+    }
+
 }
