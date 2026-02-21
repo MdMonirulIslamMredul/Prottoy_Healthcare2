@@ -77,6 +77,7 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
     Route::get('/filter-districts/{division}', [SuperAdminController::class, 'filterDistricts'])->name('superadmin.filter-districts');
     Route::get('/filter-upzilas/{district}', [SuperAdminController::class, 'filterUpzilas'])->name('superadmin.filter-upzilas');
     Route::get('/filter-phos/{upzila}', [SuperAdminController::class, 'filterPhos'])->name('superadmin.filter-phos');
+    Route::get('/filter-unions/{upzila}', [SuperAdminController::class, 'filterUnions'])->name('superadmin.filter-unions');
 
     // Divisional Chiefs Management
     Route::resource('divisional-chiefs', DivisionalChiefController::class)->names([

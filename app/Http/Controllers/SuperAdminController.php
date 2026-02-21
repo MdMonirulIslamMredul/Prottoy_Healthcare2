@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Division;
 use App\Models\District;
 use App\Models\Upzila;
+use App\Models\Union;
 use App\Models\Package;
 use App\Models\PackagePurchase;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -68,7 +69,7 @@ class SuperAdminController extends Controller
 
             if ($division) {
                 // Sort districts - those with managers first
-                $sortedDistricts = $division->districts->sortByDesc(function($district) {
+                $sortedDistricts = $division->districts->sortByDesc(function ($district) {
                     return $district->districtManager ? 1 : 0;
                 });
                 $division->setRelation('districts', $sortedDistricts);
@@ -146,6 +147,12 @@ class SuperAdminController extends Controller
             ->orderBy('name')
             ->get(['id', 'name']);
         return response()->json($phos);
+    }
+
+    public function filterUnions($upzilaId)
+    {
+        $unions = Union::where('upazilla_id', $upzilaId)->orderBy('name')->get(['id', 'name']);
+        return response()->json($unions);
     }
 
     public function generateUsersReport(Request $request)

@@ -47,6 +47,7 @@ class CustomerManagementController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'phone' => ['required', 'string', 'max:20', 'unique:users,phone'],
             'address' => ['nullable', 'string', 'max:500'],
+            'union_id' => ['nullable', 'exists:unions,id'],
         ]);
 
         User::create([
@@ -59,6 +60,7 @@ class CustomerManagementController extends Controller
             'division_id' => $pho->division_id,
             'district_id' => $pho->district_id,
             'upzila_id' => $pho->upzila_id,
+            'union_id' => $validated['union_id'] ?? null,
             'upazila_supervisor_id' => $pho->upazila_supervisor_id,
             'pho_id' => $pho->id,
             'created_by' => auth()->id(),
