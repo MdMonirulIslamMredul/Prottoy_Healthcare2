@@ -151,7 +151,7 @@ class SuperAdminController extends Controller
 
     public function filterUnions($upzilaId)
     {
-        $unions = Union::where('upazilla_id', $upzilaId)->orderBy('name')->get(['id', 'name']);
+        $unions = Union::where('upzila_id', $upzilaId)->orderBy('name')->get(['id', 'name']);
         return response()->json($unions);
     }
 

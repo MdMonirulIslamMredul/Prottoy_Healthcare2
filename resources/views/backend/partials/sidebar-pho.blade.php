@@ -9,24 +9,36 @@
     </div>
 
     <div class="sidebar-menu">
-        <a href="{{ route('pho.dashboard') }}" class="menu-item {{ request()->routeIs('pho.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('pho.dashboard') }}"
+            class="menu-item {{ request()->routeIs('pho.dashboard') ? 'active' : '' }}">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
 
         <div class="menu-section">Manage Users</div>
 
-        <a href="{{ route('pho.customers.index') }}" class="menu-item {{ request()->routeIs('pho.customers.*') ? 'active' : '' }}">
+        <a href="{{ route('pho.customers.index') }}"
+            class="menu-item {{ request()->routeIs('pho.customers.*') ? 'active' : '' }}">
             <i class="bi bi-people-fill"></i>
             <span>Customers</span>
         </a>
 
         <div class="menu-section">Package Sales</div>
 
-        <a href="{{ route('pho.packages.index') }}" class="menu-item {{ request()->routeIs('pho.packages.*') ? 'active' : '' }}">
+        <a href="{{ route('pho.packages.index') }}"
+            class="menu-item {{ request()->routeIs('pho.packages.*') ? 'active' : '' }}">
             <i class="bi bi-box-seam"></i>
             <span>Package Management</span>
         </a>
+
+        <div class="menu-section">Word Management</div>
+
+        <a href="{{ route('pho.words.index') }}"
+            class="menu-item {{ request()->routeIs('pho.words.*') ? 'active' : '' }}">
+            <i class="bi bi-geo-alt-fill"></i>
+            <span>Words</span>
+        </a>
+
     </div>
 </aside>
 

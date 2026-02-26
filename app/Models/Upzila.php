@@ -57,6 +57,6 @@ class Upzila extends Model
      */
     public function unions()
     {
-        return $this->hasMany(Union::class, 'upazilla_id');
+        return $this->hasMany(Union::class, 'upzila_id');
     }
 }

@@ -92,6 +92,19 @@
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
+                            <div class="mb-3">
+                                <label for="word_id" class="form-label">Word <span
+                                        class="text-muted">(Optional)</span></label>
+                                <select id="word_id" name="word_id"
+                                    class="form-select @error('word_id') is-invalid @enderror" disabled
+                                    data-url="{{ url('pho/get-words') }}">
+                                    <option value="">Select Word (Optional)</option>
+                                </select>
+                                @error('word_id')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
 
                         <div class="col-md-6">
@@ -123,4 +136,59 @@
             </div>
         </div>
     </div>
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const unionSelect = document.getElementById('union_id');
+                const wordSelect = document.getElementById('word_id');
+                const baseUrl = wordSelect ? wordSelect.dataset.url : null;
+
+                function clearWords() {
+                    wordSelect.innerHTML = '<option value="">Select Word (Optional)</option>';
+                    wordSelect.disabled = true;
+                }
+
+                if (!unionSelect || !wordSelect || !baseUrl) return;
+
+                // Pre-populate if old value exists
+                const oldUnion = '{{ old('union_id') }}';
+                const oldWord = '{{ old('word_id') }}';
+                if (oldUnion) {
+                    fetch(`${baseUrl}/${oldUnion}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.words && data.words.length) {
+                                data.words.forEach(w => {
+                                    const opt = document.createElement('option');
+                                    opt.value = w.id;
+                                    opt.textContent = w.name;
+                                    if (String(w.id) === String(oldWord)) opt.selected = true;
+                                    wordSelect.appendChild(opt);
+                                });
+                                wordSelect.disabled = false;
+                            }
+                        }).catch(clearWords);
+                }
+
+                unionSelect.addEventListener('change', function() {
+                    const unionId = this.value;
+                    clearWords();
+                    if (!unionId) return;
+                    fetch(`${baseUrl}/${unionId}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.words && data.words.length) {
+                                data.words.forEach(w => {
+                                    const opt = document.createElement('option');
+                                    opt.value = w.id;
+                                    opt.textContent = w.name;
+                                    wordSelect.appendChild(opt);
+                                });
+                                wordSelect.disabled = false;
+                            }
+                        }).catch(clearWords);
+                });
+            });
+        </script>
+    @endpush
 @endsection

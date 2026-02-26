@@ -11,10 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('union_id')->nullable()->after('upzila_id');
-            $table->foreign('union_id')->references('id')->on('unions')->onDelete('set null');
-        });
+        if (!Schema::hasColumn('users', 'union_id')) {
+            Schema::table('users', function (Blueprint $table) {
+                if (!Schema::hasColumn('users', 'union_id')) {
+                    $table->unsignedBigInteger('union_id')->nullable()->after('upzila_id');
+                    $table->foreign('union_id')->references('id')->on('unions')->onDelete('set null');
+                }
+            });
+        }
     }
 
     /**
@@ -22,9 +26,15 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropForeign(['union_id']);
-            $table->dropColumn('union_id');
-        });
+        if (Schema::hasColumn('users', 'union_id')) {
+            Schema::table('users', function (Blueprint $table) {
+                try {
+                    $table->dropForeign(['union_id']);
+                } catch (\Exception $e) {
+                    // ignore if foreign key does not exist
+                }
+                $table->dropColumn('union_id');
+            });
+        }
     }
 };

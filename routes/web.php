@@ -320,7 +320,7 @@ Route::middleware(['auth', 'divisionalchief'])->prefix('divisional-chief')->grou
     ]);
 
     // AJAX endpoints for cascading dropdowns
-    Route::get('/get-upzilas/{district}', function($districtId) {
+    Route::get('/get-upzilas/{district}', function ($districtId) {
         $upzilas = \App\Models\Upzila::where('district_id', $districtId)->get(['id', 'name']);
         return response()->json($upzilas);
     })->name('divisionalchief.get-upzilas');
@@ -443,6 +443,20 @@ Route::middleware(['auth', 'pho'])->prefix('pho')->group(function () {
     Route::get('/packages/{purchase}', [PHOPackagePurchaseController::class, 'show'])->name('pho.packages.show');
     Route::get('/packages/{purchase}/add-payment', [PHOPackagePurchaseController::class, 'addPayment'])->name('pho.packages.add-payment');
     Route::post('/packages/{purchase}/payment', [PHOPackagePurchaseController::class, 'storePayment'])->name('pho.packages.store-payment');
+
+    // Word Management (PHO) - PHO can only create words under unions in their upzila
+    Route::resource('words', \App\Http\Controllers\PHO\WordController::class)->names([
+        'index' => 'pho.words.index',
+        'create' => 'pho.words.create',
+        'store' => 'pho.words.store',
+        'edit' => 'pho.words.edit',
+        'update' => 'pho.words.update',
+        'destroy' => 'pho.words.destroy',
+    ])->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+
+    // AJAX: get words by union
+    Route::get('/get-words/{union}', [\App\Http\Controllers\PHO\WordController::class, 'getWords'])
+        ->name('pho.get-words');
 });
 
 // Customer Routes

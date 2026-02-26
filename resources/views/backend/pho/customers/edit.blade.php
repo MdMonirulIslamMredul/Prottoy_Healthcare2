@@ -67,7 +67,7 @@
                             <div class="mb-3">
                                 <label class="form-label">Location (Cannot be changed)</label>
                                 <input type="text" class="form-control"
-                                    value=" {{ $customer->union->name ?? 'N/A' }} ,{{ $customer->upzila->name ?? 'N/A' }}, {{ $customer->district->name ?? 'N/A' }}, {{ $customer->division->name ?? 'N/A' }}"
+                                    value="{{ $customer->word->name ?? 'N/A' }}, {{ $customer->union->name ?? 'N/A' }} ,{{ $customer->upzila->name ?? 'N/A' }}, {{ $customer->district->name ?? 'N/A' }}, {{ $customer->division->name ?? 'N/A' }}"
                                     readonly>
                             </div>
                         </div>

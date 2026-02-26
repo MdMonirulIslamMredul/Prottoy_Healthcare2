@@ -17,7 +17,7 @@ class CustomerManagementController extends Controller
     {
         $customers = User::where('role', 'customer')
             ->where('pho_id', auth()->id())
-            ->with(['division', 'district', 'upzila', 'pho'])
+            ->with(['division', 'district', 'upzila', 'pho', 'union', 'word'])
             ->latest()
             ->paginate(15);
 
@@ -48,6 +48,7 @@ class CustomerManagementController extends Controller
             'phone' => ['required', 'string', 'max:20', 'unique:users,phone'],
             'address' => ['nullable', 'string', 'max:500'],
             'union_id' => ['nullable', 'exists:unions,id'],
+            'word_id' => ['nullable', 'exists:words,id'],
         ]);
 
         User::create([
@@ -61,6 +62,7 @@ class CustomerManagementController extends Controller
             'district_id' => $pho->district_id,
             'upzila_id' => $pho->upzila_id,
             'union_id' => $validated['union_id'] ?? null,
+            'word_id' => $validated['word_id'] ?? null,
             'upazila_supervisor_id' => $pho->upazila_supervisor_id,
             'pho_id' => $pho->id,
             'created_by' => auth()->id(),

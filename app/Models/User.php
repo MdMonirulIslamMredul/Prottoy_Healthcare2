@@ -29,6 +29,7 @@ class User extends Authenticatable
         'district_id',
         'upzila_id',
         'union_id',
+        'word_id',
         'upazila_supervisor_id',
         'pho_id',
     ];
@@ -133,5 +134,13 @@ class User extends Authenticatable
     public function packagePurchases()
     {
         return $this->hasMany(PackagePurchase::class, 'customer_id');
+    }
+
+    /**
+     * Get the word that the user belongs to.
+     */
+    public function word()
+    {
+        return $this->belongsTo(Word::class);
     }
 }

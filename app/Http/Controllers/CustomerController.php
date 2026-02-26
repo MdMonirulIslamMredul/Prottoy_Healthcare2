@@ -145,7 +145,7 @@ class CustomerController extends Controller
     // AJAX endpoint to get unions by upazila
     public function getUnions($upazilaId)
     {
-        $unions = Union::where('upazilla_id', $upazilaId)
+        $unions = Union::where('upzila_id', $upazilaId)
             ->orderBy('name')
             ->get(['id', 'name', 'bn_name']);
 

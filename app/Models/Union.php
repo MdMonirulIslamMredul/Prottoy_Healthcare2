@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Union extends Model
 {
     protected $fillable = [
-        'upazilla_id',
+        'upzila_id',
         'name',
         'bn_name',
         'url',
@@ -18,7 +18,7 @@ class Union extends Model
      */
     public function upazila()
     {
-        return $this->belongsTo(Upzila::class, 'upazilla_id');
+        return $this->belongsTo(Upzila::class, 'upzila_id');
     }
 
     /**
@@ -27,5 +27,13 @@ class Union extends Model
     public function users()
     {
         return $this->hasMany(User::class, 'union_id');
+    }
+
+    /**
+     * Get all words in this union.
+     */
+    public function words()
+    {
+        return $this->hasMany(Word::class, 'union_id');
     }
 }
