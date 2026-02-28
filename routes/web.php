@@ -157,6 +157,10 @@ Route::middleware(['auth', 'superadmin'])->prefix('superadmin')->group(function 
     Route::get('/get-unions/{upazila}', [CustomerController::class, 'getUnions'])
         ->name('superadmin.get-unions');
 
+    // AJAX endpoint for words by union
+    Route::get('/get-words/{union}', [CustomerController::class, 'getWords'])
+        ->name('superadmin.get-words');
+
     Route::get('/get-phos/{upazilaSupervisor}', [CustomerController::class, 'getPHOs'])
         ->name('superadmin.get-phos');
 

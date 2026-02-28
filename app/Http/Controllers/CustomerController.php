@@ -5,22 +5,50 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Union;
+use App\Models\Division;
+use App\Models\District;
+use App\Models\Upzila;
+use App\Models\Word;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 class CustomerController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $customers = User::where('role', 'customer')
-            ->with(['division', 'district', 'upzila', 'union', 'pho'])
+        $query = User::where('role', 'customer')
+            ->with(['division', 'district', 'upzila', 'union', 'pho', 'word'])
             ->withCount('packagePurchases')
             ->withSum('packagePurchases', 'total_price')
             ->withSum('packagePurchases', 'paid_amount')
-            ->withSum('packagePurchases', 'due_amount')
-            ->paginate(10);
+            ->withSum('packagePurchases', 'due_amount');
 
-        return view('backend.superadmin.customers.index', compact('customers'));
+        if ($request->filled('division_id')) {
+            $query->where('division_id', $request->division_id);
+        }
+        if ($request->filled('district_id')) {
+            $query->where('district_id', $request->district_id);
+        }
+        if ($request->filled('upzila_id')) {
+            $query->where('upzila_id', $request->upzila_id);
+        }
+        if ($request->filled('union_id')) {
+            $query->where('union_id', $request->union_id);
+        }
+        if ($request->filled('word_id')) {
+            $query->where('word_id', $request->word_id);
+        }
+
+        $customers = $query->paginate(10)->appends($request->all());
+
+        // Prep filter select lists (dependent lists filled when parent filter present)
+        $divisions = Division::orderBy('name')->get(['id', 'name']);
+        $districts = $request->filled('division_id') ? District::where('division_id', $request->division_id)->orderBy('name')->get(['id', 'name']) : collect();
+        $upzilas = $request->filled('district_id') ? Upzila::where('district_id', $request->district_id)->orderBy('name')->get(['id', 'name']) : collect();
+        $unions = $request->filled('upzila_id') ? Union::where('upzila_id', $request->upzila_id)->orderBy('name')->get(['id', 'name']) : collect();
+        $words = $request->filled('union_id') ? Word::where('union_id', $request->union_id)->orderBy('name')->get(['id', 'name']) : collect();
+
+        return view('backend.superadmin.customers.index', compact('customers', 'divisions', 'districts', 'upzilas', 'unions', 'words'));
     }
 
     public function create()
@@ -150,6 +178,16 @@ class CustomerController extends Controller
             ->get(['id', 'name', 'bn_name']);
 
         return response()->json(['unions' => $unions]);
+    }
+
+    // AJAX endpoint to get words by union
+    public function getWords($unionId)
+    {
+        $words = \App\Models\Word::where('union_id', $unionId)
+            ->orderBy('name')
+            ->get(['id', 'name', 'bn_name']);
+
+        return response()->json(['words' => $words]);
     }
 
     // AJAX endpoint to get PHOs by upazila supervisor

@@ -13,15 +13,30 @@ class CustomerManagementController extends Controller
     /**
      * Display a listing of customers managed by this PHO.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $customers = User::where('role', 'customer')
+        $search = $request->query('q');
+
+        $query = User::where('role', 'customer')
             ->where('pho_id', auth()->id())
             ->with(['division', 'district', 'upzila', 'pho', 'union', 'word'])
-            ->latest()
-            ->paginate(15);
+            ->latest();
 
-        return view('backend.pho.customers.index', compact('customers'));
+        if (!empty($search)) {
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('phone', 'like', "%{$search}%");
+            });
+        }
+
+        $customers = $query->paginate(15)->appends($request->only('q'));
+
+        if ($request->ajax()) {
+            return view('backend.pho.customers._list', compact('customers', 'search'))->render();
+        }
+
+        return view('backend.pho.customers.index', compact('customers', 'search'));
     }
 
     /**

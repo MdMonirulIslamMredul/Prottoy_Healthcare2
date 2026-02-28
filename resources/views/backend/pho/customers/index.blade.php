@@ -3,84 +3,114 @@
 @section('title', 'Manage Customers')
 
 @section('content')
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>My Customers</h2>
-        <a href="{{ route('pho.customers.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Add New Customer
-        </a>
-    </div>
-
-    @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>My Customers</h2>
+            <a href="{{ route('pho.customers.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add New Customer
+            </a>
         </div>
-    @endif
 
-    <div class="card">
-        <div class="card-body">
-            @if($customers->count() > 0)
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>Location</th>
-                                <th>Created At</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($customers as $customer)
-                                <tr>
-                                    <td>{{ $loop->iteration + ($customers->currentPage() - 1) * $customers->perPage() }}</td>
-                                    <td>{{ $customer->name }}</td>
-                                    <td>{{ $customer->email }}</td>
-                                    <td>{{ $customer->phone ?? 'N/A' }}</td>
-                                    <td>
-                                        <small>
-                                            {{ $customer->upzila->name ?? 'N/A' }},
-                                            {{ $customer->district->name ?? 'N/A' }}
-                                        </small>
-                                    </td>
-                                    <td>{{ $customer->created_at->format('d M Y') }}</td>
-                                    <td>
-                                        <div class="btn-group btn-group-sm">
-                                            <a href="{{ route('pho.customers.edit', $customer->id) }}"
-                                               class="btn btn-outline-primary" title="Edit">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-                                            <form action="{{ route('pho.customers.destroy', $customer->id) }}"
-                                                  method="POST"
-                                                  onsubmit="return confirm('Are you sure you want to delete this customer?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-outline-danger" title="Delete">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+        <div class="mb-3">
+            <form method="GET" action="{{ route('pho.customers.index') }}" class="row g-2">
+                <div class="col-auto flex-grow-1">
+                    <input type="search" name="q" class="form-control" placeholder="Search by name, email or phone"
+                        value="{{ request('q', $search ?? '') }}">
                 </div>
-
-                <div class="d-flex justify-content-center mt-3">
-                    {{ $customers->links() }}
+                <div class="col-auto">
+                    <div class="d-flex gap-2">
+                        <button class="btn btn-outline-primary" type="submit">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                        <a href="{{ route('pho.customers.index') }}" class="btn btn-outline-secondary">Clear</a>
+                    </div>
                 </div>
-            @else
-                <div class="text-center py-5">
-                    <i class="bi bi-people" style="font-size: 3rem; color: #ccc;"></i>
-                    <p class="text-muted mt-3">No customers found. Click "Add New Customer" to create one.</p>
-                </div>
-            @endif
+            </form>
         </div>
+
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        @endif
+
+        <div class="card">
+            <div class="card-body" id="customers-list">
+                @include('backend.pho.customers._list')
+            </div>
+        </div>
+
+        @push('scripts')
+            <script>
+                (function() {
+                    const input = document.querySelector('input[name="q"]');
+                    const listContainer = document.getElementById('customers-list');
+
+                    function debounce(fn, delay = 300) {
+                        let t;
+                        return function(...args) {
+                            clearTimeout(t);
+                            t = setTimeout(() => fn.apply(this, args), delay);
+                        };
+                    }
+
+                    async function fetchList(url) {
+                        try {
+                            const res = await fetch(url, {
+                                headers: {
+                                    'X-Requested-With': 'XMLHttpRequest'
+                                }
+                            });
+                            const html = await res.text();
+                            listContainer.innerHTML = html;
+                            attachPaginationHandlers();
+                        } catch (err) {
+                            console.error('Failed to fetch customers list', err);
+                        }
+                    }
+
+                    function attachPaginationHandlers() {
+                        document.querySelectorAll('#customers-list a.page-link').forEach(link => {
+                            link.removeEventListener('click', handlePageClick);
+                            link.addEventListener('click', handlePageClick);
+                        });
+                    }
+
+                    function handlePageClick(e) {
+                        e.preventDefault();
+                        const href = this.getAttribute('href');
+                        if (href) {
+                            fetchList(href);
+                            history.pushState(null, '', href);
+                        }
+                    }
+
+                    // Live search on input
+                    if (input) {
+                        const onInput = debounce(function(e) {
+                            const q = e.target.value.trim();
+                            const url = new URL(window.location.href);
+                            if (q) url.searchParams.set('q', q);
+                            else url.searchParams.delete('q');
+                            fetchList(url.toString());
+                        }, 300);
+
+                        input.addEventListener('input', onInput);
+                    }
+
+                    // Clear button: re-fetch without q (delegated)
+                    document.querySelectorAll('a.btn-outline-secondary').forEach(btn => {
+                        btn.addEventListener('click', function(e) {
+                            // allow default navigation to happen; also update list via AJAX
+                            setTimeout(() => fetchList(window.location.href), 10);
+                        });
+                    });
+
+                    // Init pagination handlers on page load
+                    attachPaginationHandlers();
+                })();
+            </script>
+        @endpush
     </div>
-</div>
 @endsection

@@ -28,7 +28,7 @@
         <a href="{{ route('pho.packages.index') }}"
             class="menu-item {{ request()->routeIs('pho.packages.*') ? 'active' : '' }}">
             <i class="bi bi-box-seam"></i>
-            <span>Package Management</span>
+            <span>Package Sales</span>
         </a>
 
         <div class="menu-section">Word Management</div>
