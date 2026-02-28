@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\PackagePurchase;
+use App\Models\Package;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,6 +20,16 @@ class CustomerPackageController extends Controller
             ->paginate(15);
 
         return view('backend.customer.packages.index', compact('purchases'));
+    }
+
+    /**
+     * Show available packages to the customer.
+     */
+    public function available()
+    {
+        $packages = Package::where('is_active', true)->get();
+
+        return view('backend.customer.packages.available', compact('packages'));
     }
 
     /**

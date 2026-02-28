@@ -442,6 +442,8 @@ Route::middleware(['auth', 'pho'])->prefix('pho')->group(function () {
 
     // Package Purchase Management
     Route::get('/packages', [PHOPackagePurchaseController::class, 'index'])->name('pho.packages.index');
+    // Customer-specific purchase history
+    Route::get('/customers/{customer}/purchases', [PHOPackagePurchaseController::class, 'customerPurchases'])->name('pho.customers.purchases.index');
     Route::get('/packages/create', [PHOPackagePurchaseController::class, 'create'])->name('pho.packages.create');
     Route::post('/packages', [PHOPackagePurchaseController::class, 'store'])->name('pho.packages.store');
     Route::get('/packages/{purchase}', [PHOPackagePurchaseController::class, 'show'])->name('pho.packages.show');
@@ -469,5 +471,7 @@ Route::middleware(['auth', 'customer'])->prefix('customer')->group(function () {
 
     // Customer Package Views
     Route::get('/packages', [CustomerPackageController::class, 'index'])->name('customer.packages.index');
+    // Available packages for customers
+    Route::get('/packages/available', [CustomerPackageController::class, 'available'])->name('customer.packages.available');
     Route::get('/packages/{purchase}', [CustomerPackageController::class, 'show'])->name('customer.packages.show');
 });

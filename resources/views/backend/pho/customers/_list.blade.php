@@ -9,6 +9,7 @@
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Location</th>
+                        <th>Packages</th>
                         <th>Created At</th>
                         <th>Actions</th>
                     </tr>
@@ -26,6 +27,9 @@
                                     {{ $customer->district->name ?? 'N/A' }}
                                 </small>
                             </td>
+                            <td>
+                                <span class="badge bg-primary">{{ $customer->package_purchases_count ?? 0 }}</span>
+                            </td>
                             <td>{{ $customer->created_at->format('d M Y') }}</td>
                             <td>
 
@@ -33,6 +37,10 @@
                                     <a href="{{ route('pho.packages.create', ['customer_id' => $customer->id]) }}"
                                         class="btn btn-outline-success" title="Purchase Package">
                                         <i class="bi bi-cart-plus"></i>
+                                    </a>
+                                    <a href="{{ route('pho.customers.purchases.index', $customer->id) }}"
+                                        class="btn btn-outline-secondary" title="View Purchase History">
+                                        <i class="bi bi-clock-history"></i>
                                     </a>
                                     <a href="{{ route('pho.customers.edit', $customer->id) }}"
                                         class="btn btn-outline-primary" title="Edit">

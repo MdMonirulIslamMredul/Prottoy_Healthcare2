@@ -15,15 +15,54 @@ class PHOPackagePurchaseController extends Controller
     /**
      * Display a listing of packages for purchase
      */
-    public function index()
+    public function index(Request $request)
     {
         $packages = Package::where('is_active', true)->get();
-        $purchases = PackagePurchase::where('pho_id', Auth::id())
-            ->with(['package', 'customer', 'payments'])
+
+        $query = PackagePurchase::where('pho_id', Auth::id())
+            ->with(['package', 'customer', 'payments']);
+
+        if ($request->filled('customer_id')) {
+            $customerId = $request->query('customer_id');
+            // ensure the customer belongs to this PHO before applying filter
+            if (User::where('id', $customerId)->where('pho_id', Auth::id())->exists()) {
+                $query->where('customer_id', $customerId);
+            }
+        }
+
+        $purchases = $query->latest()->paginate(15);
+
+        return view('backend.pho.packages.index', compact('packages', 'purchases'));
+    }
+
+    /**
+     * Display purchase history for a specific customer (PHO-only access).
+     */
+    public function customerPurchases(User $customer, Request $request)
+    {
+        // Ensure this customer belongs to the authenticated PHO
+        if ($customer->pho_id != Auth::id()) {
+            abort(403, 'Unauthorized access.');
+        }
+
+        $purchases = PackagePurchase::where('customer_id', $customer->id)
+            ->with(['package', 'pho', 'payments'])
             ->latest()
             ->paginate(15);
 
-        return view('backend.pho.packages.index', compact('packages', 'purchases'));
+        $totalSpent = PackagePurchase::where('customer_id', $customer->id)->sum('total_price');
+        $totalPaid = PackagePurchase::where('customer_id', $customer->id)->sum('paid_amount');
+        $totalDue = PackagePurchase::where('customer_id', $customer->id)->sum('due_amount');
+
+        $totalPurchases = PackagePurchase::where('customer_id', $customer->id)->count();
+
+        $statusCounts = PackagePurchase::where('customer_id', $customer->id)
+            ->selectRaw('payment_status, count(*) as cnt')
+            ->groupBy('payment_status')
+            ->pluck('cnt', 'payment_status')
+            ->toArray();
+
+        return view('backend.pho.customers.purchase-history', compact('customer', 'purchases', 'totalSpent', 'totalPaid', 'totalDue', 'totalPurchases', 'statusCounts'));
     }
 
     /**
@@ -71,8 +110,7 @@ class PHOPackagePurchaseController extends Controller
         try {
             // Create package purchase
             $dueAmount = $package->price - $validated['paid_amount'];
-            $paymentStatus = $validated['paid_amount'] == 0 ? 'pending' :
-                           ($dueAmount == 0 ? 'paid' : 'partial');
+            $paymentStatus = $validated['paid_amount'] == 0 ? 'pending' : ($dueAmount == 0 ? 'paid' : 'partial');
 
             $purchase = PackagePurchase::create([
                 'package_id' => $validated['package_id'],

@@ -3,100 +3,103 @@
 @section('title', 'Customers Management')
 
 @section('content')
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Customers Management</h2>
-        <a href="{{ route('districtmanager.customers.create') }}" class="btn btn-primary">
-            <i class="bi bi-plus-circle"></i> Add New Customer
-        </a>
-    </div>
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Customers Management</h2>
+            <a href="{{ route('districtmanager.customers.create') }}" class="btn btn-primary">
+                <i class="bi bi-plus-circle"></i> Add New Customer
+            </a>
+        </div>
 
-    @if(session('success'))
+        {{-- @if (session('success'))
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
-    @endif
+    @endif --}}
 
-    <div class="card">
-        <div class="card-body">
-            @if($customers->count() > 0)
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Phone</th>
-                                <th>PHO</th>
-                                <th>Upazila</th>
-                                <th>Packages</th>
-                                <th>Total Amount</th>
-                                <th>Paid</th>
-                                <th>Due</th>
-                                <th>Created</th>
-                                <th class="text-end">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($customers as $customer)
+        <div class="card">
+            <div class="card-body">
+                @if ($customers->count() > 0)
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td><strong>{{ $customer->name }}</strong></td>
-                                    <td>{{ $customer->email }}</td>
-                                    <td>{{ $customer->phone ?? 'N/A' }}</td>
-                                    <td>
-                                        {{ $customer->pho->name ?? 'N/A' }}
-                                    </td>
-                                    <td>
-                                        <small class="text-muted">{{ $customer->upzila->name ?? 'N/A' }}</small>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-primary">{{ $customer->package_purchases_count ?? 0 }}</span>
-                                    </td>
-                                    <td>
-                                        <strong class="text-primary">৳{{ number_format($customer->package_purchases_sum_total_price ?? 0, 0) }}</strong>
-                                    </td>
-                                    <td>
-                                        <span class="text-success">৳{{ number_format($customer->package_purchases_sum_paid_amount ?? 0, 0) }}</span>
-                                    </td>
-                                    <td>
-                                        <span class="text-danger">৳{{ number_format($customer->package_purchases_sum_due_amount ?? 0, 0) }}</span>
-                                    </td>
-                                    <td>
-                                        <small class="text-muted">{{ $customer->created_at->format('d M, Y') }}</small>
-                                    </td>
-                                    <td class="text-end">
-                                        <a href="{{ route('districtmanager.customers.edit', $customer->id) }}"
-                                           class="btn btn-sm btn-warning">
-                                            <i class="bi bi-pencil"></i> Edit
-                                        </a>
-                                        <form action="{{ route('districtmanager.customers.destroy', $customer->id) }}"
-                                              method="POST"
-                                              class="d-inline"
-                                              onsubmit="return confirm('Are you sure you want to delete this customer?');">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                <i class="bi bi-trash"></i> Delete
-                                            </button>
-                                        </form>
-                                    </td>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>PHO</th>
+                                    <th>Upazila</th>
+                                    <th>Packages</th>
+                                    <th>Total Amount</th>
+                                    <th>Paid</th>
+                                    <th>Due</th>
+                                    <th>Created</th>
+                                    <th class="text-end">Actions</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                            </thead>
+                            <tbody>
+                                @foreach ($customers as $customer)
+                                    <tr>
+                                        <td><strong>{{ $customer->name }}</strong></td>
+                                        <td>{{ $customer->email }}</td>
+                                        <td>{{ $customer->phone ?? 'N/A' }}</td>
+                                        <td>
+                                            {{ $customer->pho->name ?? 'N/A' }}
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">{{ $customer->upzila->name ?? 'N/A' }}</small>
+                                        </td>
+                                        <td>
+                                            <span
+                                                class="badge bg-primary">{{ $customer->package_purchases_count ?? 0 }}</span>
+                                        </td>
+                                        <td>
+                                            <strong
+                                                class="text-primary">৳{{ number_format($customer->package_purchases_sum_total_price ?? 0, 0) }}</strong>
+                                        </td>
+                                        <td>
+                                            <span
+                                                class="text-success">৳{{ number_format($customer->package_purchases_sum_paid_amount ?? 0, 0) }}</span>
+                                        </td>
+                                        <td>
+                                            <span
+                                                class="text-danger">৳{{ number_format($customer->package_purchases_sum_due_amount ?? 0, 0) }}</span>
+                                        </td>
+                                        <td>
+                                            <small class="text-muted">{{ $customer->created_at->format('d M, Y') }}</small>
+                                        </td>
+                                        <td class="text-end">
+                                            <a href="{{ route('districtmanager.customers.edit', $customer->id) }}"
+                                                class="btn btn-sm btn-warning">
+                                                <i class="bi bi-pencil"></i> Edit
+                                            </a>
+                                            <form action="{{ route('districtmanager.customers.destroy', $customer->id) }}"
+                                                method="POST" class="d-inline"
+                                                onsubmit="return confirm('Are you sure you want to delete this customer?');">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
 
-                <div class="mt-3">
-                    {{ $customers->links() }}
-                </div>
-            @else
-                <div class="text-center py-5">
-                    <i class="bi bi-people-fill text-muted" style="font-size: 3rem;"></i>
-                    <p class="text-muted mt-3">No Customers found.</p>
-                </div>
-            @endif
+                    <div class="mt-3">
+                        {{ $customers->links() }}
+                    </div>
+                @else
+                    <div class="text-center py-5">
+                        <i class="bi bi-people-fill text-muted" style="font-size: 3rem;"></i>
+                        <p class="text-muted mt-3">No Customers found.</p>
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
-</div>
 @endsection

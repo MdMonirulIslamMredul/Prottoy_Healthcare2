@@ -9,7 +9,8 @@
     </div>
 
     <div class="sidebar-menu">
-        <a href="{{ route('customer.dashboard') }}" class="menu-item {{ request()->routeIs('customer.dashboard') ? 'active' : '' }}">
+        <a href="{{ route('customer.dashboard') }}"
+            class="menu-item {{ request()->routeIs('customer.dashboard') ? 'active' : '' }}">
             <i class="bi bi-speedometer2"></i>
             <span>Dashboard</span>
         </a>
@@ -29,9 +30,16 @@
 
         <div class="menu-section">My Packages</div>
 
-        <a href="{{ route('customer.packages.index') }}" class="menu-item {{ request()->routeIs('customer.packages.*') ? 'active' : '' }}">
+        <a href="{{ route('customer.packages.available') }}"
+            class="menu-item {{ request()->routeIs('customer.packages.available') ? 'active' : '' }}">
             <i class="bi bi-box-seam"></i>
-            <span>Healthcare Packages</span>
+            <span>Available Packages</span>
+        </a>
+
+        <a href="{{ route('customer.packages.index') }}"
+            class="menu-item {{ request()->routeIs('customer.packages.index') ? 'active' : '' }}">
+            <i class="bi bi-journal-text"></i>
+            <span>Purchase History</span>
         </a>
     </div>
 </aside>

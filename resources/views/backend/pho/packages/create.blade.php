@@ -50,7 +50,7 @@
                             <option value="">-- Select Package --</option>
                             @foreach ($packages as $package)
                                 <option value="{{ $package->id }}" data-price="{{ $package->price }}"
-                                    {{ old('package_id') == $package->id ? 'selected' : '' }}>
+                                    {{ old('package_id') == $package->id || request('package_id') == $package->id ? 'selected' : '' }}>
                                     {{ $package->name }} - ৳{{ number_format($package->price, 2) }}
                                 </option>
                             @endforeach
@@ -116,11 +116,19 @@
     </div>
 
     <script>
-        document.getElementById('package_id').addEventListener('change', function() {
-            const selectedOption = this.options[this.selectedIndex];
-            const price = selectedOption.getAttribute('data-price');
+        function updatePackagePrice() {
+            const select = document.getElementById('package_id');
+            const selectedOption = select.options[select.selectedIndex];
+            const price = selectedOption ? selectedOption.getAttribute('data-price') : 0;
             document.getElementById('packagePrice').textContent = '৳' + parseFloat(price || 0).toFixed(2);
             document.getElementById('paid_amount').setAttribute('max', price || 0);
+        }
+
+        document.getElementById('package_id').addEventListener('change', updatePackagePrice);
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // initialize price display if a package is preselected
+            updatePackagePrice();
         });
     </script>
 @endsection

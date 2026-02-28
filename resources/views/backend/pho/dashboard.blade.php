@@ -20,13 +20,13 @@
                 <p class="text-muted">Welcome, {{ $pho->name }}</p>
             </div>
         </div>
-
+        {{--
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <i class="bi bi-check-circle me-2"></i>{{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-        @endif
+        @endif --}}
 
         <!-- Package Sales Statistics -->
         <div class="row mb-4">
@@ -227,6 +227,7 @@
                                             <th>SL</th>
                                             <th>Name</th>
                                             <th>Email</th>
+                                            <th>Phone</th>
                                             <th>Created At</th>
                                         </tr>
                                     </thead>
@@ -236,6 +237,7 @@
                                                 <td>{{ $customers->firstItem() + $index }}</td>
                                                 <td>{{ $customer->name }}</td>
                                                 <td>{{ $customer->email }}</td>
+                                                <td>{{ $customer->phone }}</td>
                                                 <td>{{ $customer->created_at->format('d M Y, h:i A') }}</td>
                                             </tr>
                                         @endforeach

@@ -20,6 +20,10 @@ class CustomerManagementController extends Controller
         $query = User::where('role', 'customer')
             ->where('pho_id', auth()->id())
             ->with(['division', 'district', 'upzila', 'pho', 'union', 'word'])
+            ->withCount('packagePurchases')
+            ->withSum('packagePurchases', 'total_price')
+            ->withSum('packagePurchases', 'paid_amount')
+            ->withSum('packagePurchases', 'due_amount')
             ->latest();
 
         if (!empty($search)) {

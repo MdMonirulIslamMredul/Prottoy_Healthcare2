@@ -52,7 +52,9 @@
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
                                 <input type="text" class="form-control @error('phone') is-invalid @enderror"
-                                    id="phone" name="phone" value="{{ old('phone', $customer->phone) }}" required>
+                                    id="phone" name="phone" value="{{ old('phone', $customer->phone) }}"
+                                    pattern="^01[3-9][0-9]{8}$" inputmode="tel" placeholder="e.g. 01712345678" required>
+                                <div class="form-text text-muted">Accepts local 01XXXXXXXXX format only.</div>
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -122,6 +124,38 @@
                             <i class="bi bi-save"></i> Update Customer
                         </button>
                     </div>
+
+                    @push('scripts')
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const form = document.querySelector('form');
+                                const phoneInput = document.getElementById('phone');
+                                const phoneRegex = /^01[3-9][0-9]{8}$/;
+                                if (form && phoneInput) {
+                                    form.addEventListener('submit', function(e) {
+                                        const val = phoneInput.value.trim();
+                                        if (val && !phoneRegex.test(val)) {
+                                            e.preventDefault();
+                                            phoneInput.classList.add('is-invalid');
+                                            let fb = phoneInput.parentElement.querySelector('.invalid-feedback');
+                                            if (!fb) {
+                                                fb = document.createElement('div');
+                                                fb.className = 'invalid-feedback';
+                                                phoneInput.parentElement.appendChild(fb);
+                                            }
+                                            fb.textContent =
+                                                'Please enter a valid Bangladeshi phone number in 01XXXXXXXXX format (e.g. 01712345678).';
+                                            phoneInput.focus();
+                                        }
+                                    });
+                                    phoneInput.addEventListener('input', function() {
+                                        if (phoneInput.classList.contains('is-invalid')) phoneInput.classList.remove(
+                                            'is-invalid');
+                                    });
+                                }
+                            });
+                        </script>
+                    @endpush
                 </form>
             </div>
         </div>
