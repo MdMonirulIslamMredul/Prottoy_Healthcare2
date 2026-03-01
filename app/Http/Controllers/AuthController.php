@@ -26,24 +26,35 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'identifier' => 'required|string',
             'password' => 'required|min:6',
         ]);
 
-        $credentials = $request->only('email', 'password');
+        $identifier = $request->input('identifier');
+        $password = $request->input('password');
+
+        // Decide identifier type: email or phone
+        if (filter_var($identifier, FILTER_VALIDATE_EMAIL)) {
+            $credentials = ['email' => $identifier, 'password' => $password];
+        } else {
+            // Validate Bangladeshi local phone format: 01XXXXXXXXX
+            if (!preg_match('/^01[3-9][0-9]{8}$/', $identifier)) {
+                return back()->withErrors(['identifier' => 'Enter a valid Bangladeshi phone number (01XXXXXXXXX)'])->withInput();
+            }
+            $credentials = ['phone' => $identifier, 'password' => $password];
+        }
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
 
-            // Check user role and redirect accordingly
             return $this->redirectBasedOnRole($user);
         }
 
         return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->withInput($request->only('email'));
+            'identifier' => 'The provided credentials do not match our records.',
+        ])->withInput($request->only('identifier'));
     }
 
     /**

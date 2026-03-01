@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -117,6 +118,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="login-container">
         <div class="login-header">
@@ -124,21 +126,21 @@
             <p>Please login to continue</p>
         </div>
 
-        @if(session('success'))
+        @if (session('success'))
             <div class="success-message">
                 {{ session('success') }}
             </div>
         @endif
 
-        @if(session('error'))
+        @if (session('error'))
             <div class="error-message">
                 {{ session('error') }}
             </div>
         @endif
 
-        @if($errors->any())
+        @if ($errors->any())
             <div class="error-message">
-                @foreach($errors->all() as $error)
+                @foreach ($errors->all() as $error)
                     <div>{{ $error }}</div>
                 @endforeach
             </div>
@@ -148,30 +150,19 @@
             @csrf
 
             <div class="form-group">
-                <label for="email">Email Address</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="{{ old('email') }}"
-                    class="@error('email') input-error @enderror"
-                    required
-                    autofocus
-                >
-                @error('email')
+                <label for="identifier">Email or Phone</label>
+                <input type="text" id="identifier" name="identifier" value="{{ old('identifier') }}"
+                    class="@error('identifier') input-error @enderror" placeholder="Enter email or 01XXXXXXXXX" required
+                    autofocus>
+                @error('identifier')
                     <div class="error-text">{{ $message }}</div>
                 @enderror
             </div>
 
             <div class="form-group">
                 <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    class="@error('password') input-error @enderror"
-                    required
-                >
+                <input type="password" id="password" name="password" class="@error('password') input-error @enderror"
+                    required>
                 @error('password')
                     <div class="error-text">{{ $message }}</div>
                 @enderror
@@ -181,4 +172,5 @@
         </form>
     </div>
 </body>
+
 </html>
